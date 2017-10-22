@@ -6,10 +6,10 @@ class DataBase:
 	cnn=None
 	environment='development'
 	try:
-		if environment=='development':
+		if environment=='development_':
 			cnn = mysql.connector.connect(user='root', password='123123',host='localhost',port='3307',database='hhrr_profile_matcher')
 		else:
-			cnn = mysql.connector.connect(user='word_user', password='123123',host='127.6.199.130',port='3306',database='hhrr_profile_matcher')
+			cnn = mysql.connector.connect(user='ilimek', password='123123',host='mysql',port='3306',database='hhrr_profile_matcher')
 	except mysql.connector.Error as err:
 			raise Exception(err.msg)
 	except:
