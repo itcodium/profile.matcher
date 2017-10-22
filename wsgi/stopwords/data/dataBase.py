@@ -6,7 +6,7 @@ class DataBase:
 	cnn=None
 	environment='development'
 	try:
-		if environment=='development_':
+		if environment=='development':
 			cnn = mysql.connector.connect(user='root', password='123123',host='localhost',port='3307',database='hhrr_profile_matcher')
 		else:
 			cnn = mysql.connector.connect(user='ilimek', password='123123',host='mysql',port='3306',database='hhrr_profile_matcher')
