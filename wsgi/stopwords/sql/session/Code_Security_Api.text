@@ -1,0 +1,100 @@
+-----------------------------------------------------------
+-- OBTENER TOKEN MEDIANTE USUARIO Y PASSWORD
+-----------------------------------------------------------
+
+[WebMethod]
+public ServiceTicket login(string aUserName, string aPassWord)
+{
+    ServiceTicket sTck = new ServiceTicket();
+
+    DataRow dr = new dsCheckPassword().Tables["eCheckPassword"].NewRow();
+    dr["userName"] = aUserName;
+    dr["password"] = aPassWord;
+
+    WsLoginBus lgn = new WsLoginBus();
+    DataSet ckPWD = lgn.login(dr);
+    DataRow drSession;
+
+    if (ckPWD.Tables.Count > 0)
+    {
+        if (ckPWD.Tables[0].Rows.Count > 0)
+        {
+            sTck.isAuthenticated = true;
+            sTck.sessionKey = ckPWD.Tables[0].Rows[0]["sessionKey"].ToString();
+            sTck.expiration = Convert.ToDateTime(ckPWD.Tables[0].Rows[0]["expiration"]);
+
+            if (sTck.isAuthenticated)
+            {
+                if (Context.Cache["SessionKeys"] == null)
+                {
+                    loadSessionKeys();
+                }
+
+                drSession = ((DataTable)Context.Cache["SessionKeys"]).NewRow();
+                drSession["session_key"] = sTck.sessionKey;
+                drSession["session_expiration"] = sTck.expiration;
+                drSession["session_userID"] = ckPWD.Tables[0].Rows[0]["userID"].ToString();
+                drSession["session_username"] = ckPWD.Tables[0].Rows[0]["username"].ToString();
+                drSession["session_role"] = Convert.ToInt32(ckPWD.Tables[0].Rows[0]["role"]);
+                ((DataTable)Context.Cache["SessionKeys"]).Rows.Add(drSession);
+            }
+        }
+    }
+    return sTck;
+}
+
+
+-----------------------------------------------------------
+-- Ejemplo de metodo autenticado
+-----------------------------------------------------------
+
+[WebMethod, SoapHeader("Authentication")]
+public int   getLuckyNumber()
+{
+    int res=0;
+    if (authenticate(Authentication))
+    {
+        res = 7;
+    }
+    return res;
+}
+
+
+-----------------------------------------------------------
+-- Autenticar la session desde la cache de la aplicacion
+-----------------------------------------------------------
+        
+
+private bool authenticate(AuthHeader aAuthHeader)
+{
+    bool res = false;
+    string strMatch;
+    if (Context.Cache["SessionKeys"] == null)
+    {
+        loadSessionKeys();
+    }
+
+    if (aAuthHeader != null)
+    {
+        strMatch = "Session_Key='" + aAuthHeader.SessionKey + "' and Session_expiration > #" + String.Format("{0:s}", DateTime.Now) + "#";
+        DataRow[] drSession = ((DataTable)Context.Cache["SessionKeys"]).Select(strMatch);
+        if (drSession.Length > 0)
+        {
+            res = true;
+        }
+       
+    }else
+    {
+        throw RaiseException("GetException", "WSSoapException", "Usuario No autenticado", "1000", "", FaultCode.Client);
+    }
+    return res;
+
+}
+
+private void loadSessionKeys()
+{
+    WsLoginBus lgn = new WsLoginBus();
+    DataSet ds = lgn.loadSessionKeys();
+    ds.Tables[0].TableName = "SessionKeys";
+    Context.Cache.Insert("SessionKeys", ds.Tables["SessionKeys"], null, DateTime.Now.AddHours(2), TimeSpan.Zero);
+}
