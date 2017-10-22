@@ -6,7 +6,7 @@ setup(name='YourAppName',
       author='Your Name',
       author_email='example@example.com',
       url='https://www.python.org/community/sigs/current/distutils-sig',
-      install_requires=['Flask>=0.7.2','flask-restful','Flask-JSON','flask-cors','mysql-connector-python>=1.0.12', 'MarkupSafe'],
+      install_requires=['Flask>=0.7.2','flask-restful','Flask-JSON','flask-cors', 'MarkupSafe'],
       )
 
-#,'cryptography'
+#,'cryptography','mysql-connector-python>=1.0.12'
