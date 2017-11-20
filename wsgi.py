@@ -22,10 +22,11 @@ from api import ClientePut
 from api import ClienteDelete
 '''
 
-'''
-#init 2017-11-20
 from api import Perfil
 from api import PerfilList
+'''
+#init 2017-11-20
+
 from api import Modulo
 from api import ModuloList
 from api import Usuario
@@ -35,13 +36,12 @@ from api import MenuList
 from api import PerfilModulo
 from api import PerfilModuloList
 from api import PerfilModuloByPerfil
-
+#fin 2017-11-20
+'''
 
 from api import SessionKeys
 from api import support_jsonp
-#fin 2017-11-20
-'''
- 
+
 #from stopwords.common import CipherData
 '''
 test=CipherData()
@@ -61,7 +61,7 @@ json = FlaskJSON(application)
 
 # then in your view
 @application.route('/test', methods=['GET'])
-#@support_jsonp
+@support_jsonp
 def test():
        return '{"username":"username2017-08-05","email":"test@gmail.com","id":"1597"}'
 
@@ -73,15 +73,15 @@ def index():
 
 
 
+api = Api(application)
+api.add_resource(SessionKeys, '/api/login')
+api.add_resource(PerfilList, '/api/perfil')
+api.add_resource(Perfil, '/api/perfil/<id>')
+
 
 '''
 #init 2017-11-20
-api = Api(app)
-api.add_resource(SessionKeys, '/api/login')
 
-
-api.add_resource(PerfilList, '/api/perfil')
-api.add_resource(Perfil, '/api/perfil/<id>')
 
 
 api.add_resource(UsuarioList, '/api/usuario')
