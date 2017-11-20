@@ -4,14 +4,10 @@ from flask_restful import Api
 from flask_json import FlaskJSON
 from flask_cors import CORS, cross_origin
 
+from middleware import ApiMiddleWare
+
 '''
 #init 2017-11-20
-
-
- 
-
-
-from middleware import ApiMiddleWare
 
 from api import Cliente
 from api import ClienteList
@@ -25,6 +21,7 @@ from api import ClientePost
 from api import ClientePut
 from api import ClienteDelete
 '''
+
 '''
 #init 2017-11-20
 from api import Perfil
@@ -53,9 +50,9 @@ print("decrypt -> ",test.decrypt("gAAAAABXukcGRXQ0T_6J5ZOb0RzJP1Rfpve0vb00Ibnrrh
 '''
 
  
-application = Flask(__name__)
+application = Flask(__name__, static_url_path='')
 application.debug = True
-#app.wsgi_app = ApiMiddleWare(application.wsgi_app) #2017-11-20 
+application.wsgi_app = ApiMiddleWare(application.wsgi_app) #2017-11-20 
 application.config['PROPAGATE_EXCEPTIONS'] = True
 CORS(application)
 json = FlaskJSON(application)
