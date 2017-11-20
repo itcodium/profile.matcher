@@ -1,13 +1,18 @@
 from flask import Flask
+
+'''
 from flask import jsonify 
 from flask_restful import Api
 from flask_json import FlaskJSON
 from flask_cors import CORS, cross_origin
 
 
-'''
+
 #init 2017-11-20
 
+flask-restful
+Flask-JSON
+flask-cors
 
  
 
@@ -57,9 +62,9 @@ print("decrypt -> ",test.decrypt("gAAAAABXukcGRXQ0T_6J5ZOb0RzJP1Rfpve0vb00Ibnrrh
 app = Flask(__name__, static_url_path='')
 app.debug = True
 #app.wsgi_app = ApiMiddleWare(app.wsgi_app) #2017-11-20 
-app.config['PROPAGATE_EXCEPTIONS'] = True
-CORS(app)
-json = FlaskJSON(app)
+#app.config['PROPAGATE_EXCEPTIONS'] = True
+#CORS(app)
+#json = FlaskJSON(app)
 
 
 
@@ -67,7 +72,7 @@ json = FlaskJSON(app)
 @app.route('/test', methods=['GET'])
 #@support_jsonp
 def test():
-       return jsonify(username="username2017-08-05",email="test@gmail.com",id=1597)
+       return '{"username":"username2017-08-05","email":"test@gmail.com","id":"1597"}'
 
 @app.route('/')
 def index():
