@@ -67,7 +67,7 @@ application = Flask(__name__)
 
 
 
-application.debug = True
+#application.debug = True
 #app.wsgi_app = ApiMiddleWare(app.wsgi_app) #2017-11-20 
 #app.config['PROPAGATE_EXCEPTIONS'] = True
 #CORS(app)
