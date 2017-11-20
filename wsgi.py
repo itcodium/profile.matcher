@@ -62,12 +62,12 @@ print("decrypt -> ",test.decrypt("gAAAAABXukcGRXQ0T_6J5ZOb0RzJP1Rfpve0vb00Ibnrrh
 '''
 
  
-app = Flask(__name__)
+application = Flask(__name__)
 
 
 
 
-app.debug = True
+application.debug = True
 #app.wsgi_app = ApiMiddleWare(app.wsgi_app) #2017-11-20 
 #app.config['PROPAGATE_EXCEPTIONS'] = True
 #CORS(app)
@@ -76,14 +76,14 @@ app.debug = True
 
 
 # then in your view
-@app.route('/test', methods=['GET'])
+@application.route('/test', methods=['GET'])
 #@support_jsonp
 def test():
        return '{"username":"username2017-08-05","email":"test@gmail.com","id":"1597"}'
 
-@app.route('/')
+@application.route('/')
 def index():
-	return app.send_static_file('index.html')
+	return application.send_static_file('index.html')
 
 
 
@@ -119,4 +119,4 @@ api.add_resource(PerfilModuloByPerfil, '/api/perfilModulo/ByPerfil/<id>')
 #fin 2017-11-20
 '''
 if __name__ == "__main__":
-	app.run()
+	application.run()
