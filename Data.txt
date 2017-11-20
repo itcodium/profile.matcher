@@ -1,6 +1,0 @@
-Shh conection  putty
-571e3a8f89f5cfb208000110@python-viupho.rhcloud.com
-REF: https://developers.openshift.com/managing-your-applications/remote-connection.html
-
-
- 

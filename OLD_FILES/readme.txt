@@ -33,5 +33,5 @@ B. Packages python 3.4
  
  	b. pip install mysql-connector-python (ver si es necesario)
  	   sudo pip install --allow-external mysql-connector-python mysql-connector-python
-		P1G2ms77C3N4S
+		
 

@@ -11,9 +11,11 @@ class DataBase:
 		else:
 			cnn = mysql.connector.connect(user='ilimek', password='123123',host='mysql',port='3306',database='hhrr_profile_matcher')
 	except mysql.connector.Error as err:
-			raise Exception(err.msg)
+			#raise Exception(err.msg)
+			print("error db")
 	except:
-		raise Exception(sys.exc_info()[0])
+		print("Error db")
+		#raise Exception(sys.exc_info()[0])
 
 	def getDictionary(self,data):
 		result = []

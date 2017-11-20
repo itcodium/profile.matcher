@@ -1,0 +1,6 @@
+gunicorn
+Flask
+flask-restful
+Flask-JSON
+flask-cors
+MarkupSafe
