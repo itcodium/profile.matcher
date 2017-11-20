@@ -1,3 +1,3 @@
 git add .
-git commit -m "se comenta application.debug = True  2017-11-20"
+git commit -m "2017-11-20, add flask-restful Flask-JSON flask-cors "
 git push
