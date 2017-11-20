@@ -1,6 +1,2 @@
 gunicorn==19.4.5
 Flask>=0.7.2
-flask-restful
-Flask-JSON
-flask-cors
-MarkupSafe
