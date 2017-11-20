@@ -1,5 +1,8 @@
 from flask import Flask
 
+
+
+
 '''
 from flask import jsonify 
 from flask_restful import Api
@@ -59,7 +62,11 @@ print("decrypt -> ",test.decrypt("gAAAAABXukcGRXQ0T_6J5ZOb0RzJP1Rfpve0vb00Ibnrrh
 '''
 
  
-app = Flask(__name__, static_url_path='')
+app = Flask(__name__)
+
+
+
+
 app.debug = True
 #app.wsgi_app = ApiMiddleWare(app.wsgi_app) #2017-11-20 
 #app.config['PROPAGATE_EXCEPTIONS'] = True
@@ -77,7 +84,12 @@ def test():
 @app.route('/')
 def index():
 	return app.send_static_file('index.html')
-	
+
+
+
+
+
+
 '''
 #init 2017-11-20
 api = Api(app)
