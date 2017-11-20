@@ -70,8 +70,9 @@ class PerfilList(Resource,CustomException):
 class Perfil(Resource,CustomException):
     def get(self, id):
         try:
-            data= perfil.getById(id)
-            return support_jsonp_custom(data,resource_fields)
+            #data= perfil.getById(id)
+            #return support_jsonp_custom(data,resource_fields)
+            return {"status":"ERROR", "message": "texto de pruebas..."}
         except  Exception as err:
             return self.showCustomException(err,request.args)
                 
