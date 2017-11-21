@@ -9,10 +9,10 @@ class DataBase:
 		if environment=='development':
 			cnn = mysql.connector.connect(user='root', password='123123',host='localhost',port='3307',database='hhrr_profile_matcher')
 		else:
-			cnn = mysql.connector.connect(user='ilimek', password='123123',host='mysql',port='3306',database='hhrr_profile_matcher')
+			cnn = mysql.connector.connect(user='root', password='123123',host='127.0.0.1',port='3306',database='hhrr_profile_matcher')
 	except mysql.connector.Error as err:
 			#raise Exception(err.msg)
-			print("error db")
+			print("error db",err.msg)
 	except:
 		print("Error db")
 		#raise Exception(sys.exc_info()[0])
