@@ -2,12 +2,12 @@ var API_URL_PROTOCOLO = "";
 var API_URL = "";
 
 
-//var ENTORNO = '//python-viupho';
-var ENTORNO = '//127.0.0.1:5000';
+var ENTORNO = '//python-viupho';
+//var ENTORNO = '//127.0.0.1:5000';
 
 if (ENTORNO == '//python-viupho') {
     API_URL_PROTOCOLO = "";
-    API_URL = API_URL_PROTOCOLO + "//python-viupho.rhcloud.com/api/";
+    API_URL = API_URL_PROTOCOLO + "http://bbb1-1000.193b.starter-ca-central-1.openshiftapps.com/api/";
 }
 
 if (ENTORNO == '//127.0.0.1:5000') {
