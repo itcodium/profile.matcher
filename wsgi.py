@@ -6,13 +6,6 @@ from flask_cors import CORS, cross_origin
 
 from middleware import ApiMiddleWare
 
-'''
-#init 2017-11-20
-
-from api import Cliente
-from api import ClienteList
-#fin 2017-11-20
-'''
 
 '''
 from api import ClienteGetAll
@@ -22,10 +15,11 @@ from api import ClientePut
 from api import ClienteDelete
 '''
 
+from api import Cliente
+from api import ClienteList
+
 from api import Perfil
 from api import PerfilList
-'''
-#init 2017-11-20
 
 from api import Modulo
 from api import ModuloList
@@ -36,6 +30,9 @@ from api import MenuList
 from api import PerfilModulo
 from api import PerfilModuloList
 from api import PerfilModuloByPerfil
+'''
+#init 2017-11-20
+
 #fin 2017-11-20
 '''
 
@@ -79,8 +76,6 @@ api.add_resource(PerfilList, '/api/perfil')
 api.add_resource(Perfil, '/api/perfil/<id>')
 
 
-'''
-#init 2017-11-20
 
 
 
@@ -100,7 +95,6 @@ api.add_resource(Modulo, '/api/modulo/<id>')
 api.add_resource(PerfilModuloList, '/api/perfilModulo')
 api.add_resource(PerfilModulo, '/api/perfilModulo/<id>')
 api.add_resource(PerfilModuloByPerfil, '/api/perfilModulo/ByPerfil/<id>')
-#fin 2017-11-20
-'''
+
 if __name__ == "__main__":
 	application.run()

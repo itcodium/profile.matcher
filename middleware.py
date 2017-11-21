@@ -112,9 +112,8 @@ class ApiMiddleWare(object):
 			self.body=''
 			if environ['PATH_INFO'].upper()=='/API/LOGIN':
 				self.isApiLogin=True
-		#else: 2017-11-20
-			#self.checkSession(parameters,environ)
-
+		else:
+			self.checkSession(parameters,environ)
 
 		if self.authorized==1:
 			if self.isApiLogin==True:
