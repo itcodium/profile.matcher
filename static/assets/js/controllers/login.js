@@ -4,8 +4,8 @@
 app.controller('login', function ($scope, $http, $window, $httpParamSerializerJQLike, Login_Service_Caller) {
     $scope.action = API_URL +'login';
     $scope.form = {};
-    $scope.form.usuario = 'admin';
-    $scope.form.password = "123123";
+    $scope.form.usuario = '';
+    $scope.form.password = "";
     
     $scope.languages = APP_PAGE_LANGUAGE.languages;
     $scope.app_lang = APP_PAGE_LANGUAGE.getSelectedLanguage();
