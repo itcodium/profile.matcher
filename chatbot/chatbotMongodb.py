@@ -24,7 +24,7 @@ bot = ChatBot(
     ],
     input_adapter='chatterbot.input.TerminalAdapter',
     output_adapter='chatterbot.output.TerminalAdapter',
-    database_uri='mongodb://root:kAUmjz4Hxx36@192.168.124.129:27017',
+    database_uri='mongodb://root:kAUmjz4Hxx36@192.168.220.128:27017',
     database='chatbot'
 )
 
@@ -38,6 +38,8 @@ conversation1 = [
 "hello_result()",
 "thanks you"
 ]
+
+'''
 
 conversation2 = [
 "Hello",    #input del usuario
@@ -85,7 +87,7 @@ conversation6 = [
 "No",
 "What report do you want?"
 ]
-
+'''
 '''
 bot.set_trainer(ListTrainer)
 bot.train(conversation1)

@@ -1,5 +1,6 @@
 REM python simpleChat.py
-python chatbotMongodb.py
+REM python chatbotMongodb.py
+python basicChat.py
 @pause
 
   
