@@ -1,17 +1,24 @@
 from chatterbot import ChatBot
 
 chatbot = ChatBot(
-    'Ron Obvious',
+    'Terminal',
     trainer='chatterbot.trainers.ChatterBotCorpusTrainer'
 )
 
-# Train based on the english corpus
-# chatbot.train("chatterbot.corpus.english")
+#chatbot.train("./train/")
 
 # Get a response to an input statement
 #res=chatbot.get_response("Security threats")
 #res=chatbot.get_response("hello")
-res=chatbot.get_response("give me a report")
 
 
-print(res)
+
+strInitChat='Iniciando chat';
+print(strInitChat)
+while True:
+    try:
+        strInitChat = input()
+        res=chatbot.get_response(strInitChat)
+        print('Bot: ',res)
+    except (KeyboardInterrupt, EOFError, SystemExit):
+        break

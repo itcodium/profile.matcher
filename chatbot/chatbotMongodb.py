@@ -10,6 +10,7 @@ from chatterbot.trainers import ListTrainer
 # Create a new ChatBot instance
 bot = ChatBot(
     'Terminal',
+    trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
     storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
     logic_adapters=[
         'chatterbot.logic.BestMatch',
@@ -30,7 +31,7 @@ bot = ChatBot(
 
 
  
-
+'''
 conversation1 = [
 "Hello", #input del usuario
 "Hi",
@@ -39,7 +40,7 @@ conversation1 = [
 "thanks you"
 ]
 
-'''
+
 
 conversation2 = [
 "Hello",    #input del usuario
@@ -98,6 +99,7 @@ bot.train(conversation5)
 bot.train(conversation6)
  '''
 
+bot.train("./train/")
 
 strInitChat='Iniciando chat';
 print(strInitChat)
@@ -106,7 +108,7 @@ while True:
     try:
         #print('User: ',strInitChat)
         bot_output = bot.get_response(None)
-        print('Bot: ',bot_output)
+        #print('Bot: ',bot_output)
         #strInitChat = input()
     except (KeyboardInterrupt, EOFError, SystemExit):
         break

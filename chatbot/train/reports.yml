@@ -3,7 +3,13 @@ categories:
 conversations:
 - - Give me a report of security threats in apache server
   - hello_result()
+- - apache server
+  - hello_result()  
+- - apache server report
+  - hello_result()    
 - - give me a report
+  - What report do you want?
+- - I need a report  
   - What report do you want?
 - - Security threats
   - hello_result()
