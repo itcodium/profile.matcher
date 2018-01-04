@@ -30,85 +30,12 @@ bot = ChatBot(
 )
 
 
- 
-'''
-conversation1 = [
-"Hello", #input del usuario
-"Hi",
-"give me a report of security threats in apache server",
-"hello_result()",
-"thanks you"
-]
-
-
-
-conversation2 = [
-"Hello",    #input del usuario
-"Hi",
-"give me a report",
-"What report do you want?"
-"Security threats",
-"hello_result()",
-"thanks you"
-]
-
-conversation3 = [
-"Hello", #input del usuario
-"Hi",
-"I need a report",
-"What report do you want?"
-"Security threats",
-"hello_result()",
-"thanks you"
-]
-
-conversation4 = [
-"Hello", #input del usuario
-"Hi",
-"I want the Security threats report",
-"hello_result()",
-"thanks you"
-]
-
-conversation5 = [
-"Hello", #input del usuario
-"Hi",
-"I need a report",
-"Do you what the apache server report?",
-"Yes",
-"hello_result()",
-"thanks you"
-]
-
-conversation6 = [
-"Hello", #input del usuario
-"Hi",
-"I need a report",
-"Do you what the apache server report?",
-"No",
-"What report do you want?"
-]
-'''
-'''
-bot.set_trainer(ListTrainer)
-bot.train(conversation1)
-bot.train(conversation2)
-bot.train(conversation3)
-bot.train(conversation4)
-bot.train(conversation5)
-bot.train(conversation6)
- '''
-
 bot.train("./train/")
 
 strInitChat='Iniciando chat';
 print(strInitChat)
-#strInitChat = input()
 while True:
     try:
-        #print('User: ',strInitChat)
         bot_output = bot.get_response(None)
-        #print('Bot: ',bot_output)
-        #strInitChat = input()
     except (KeyboardInterrupt, EOFError, SystemExit):
         break
