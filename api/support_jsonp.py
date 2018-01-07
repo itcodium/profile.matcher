@@ -23,11 +23,11 @@ from flask import jsonify
 from time import mktime
 from flask_restful import marshal
 
-from stopwords.bus import ErrorBus
+#from stopwords.bus import ErrorBus
 from functools import wraps
 from flask import redirect, request, current_app
  
-error=ErrorBus()
+#error=ErrorBus()
 
 def support_jsonp(f):
     """Wraps JSONified output for JSONP"""
@@ -94,7 +94,7 @@ def support_jsonp_error(err,parameters):
 def support_jsonp_ok(parameters,pMessage=None):
     try:
         if pMessage==None:
-            message=error.getErrorMessage('','A0006')[0]["ErrorMessage"]
+            message="Error application"#error.getErrorMessage('','A0006')[0]["ErrorMessage"]
         else:
             message=pMessage  
               

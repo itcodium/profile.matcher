@@ -23,7 +23,6 @@ from flask_json import FlaskJSON, JsonError, json_response, as_json
 
 from stopwords.common import ClienteItem
 from stopwords.bus import ClienteBus
-from stopwords.bus import ErrorBus
 
 from .customException import CustomException
 from .support_jsonp import support_jsonp_custom
@@ -40,15 +39,13 @@ resource_fields = {
 
 
 
-cliente=ClienteBus()
-item=ClienteItem()
-error=ErrorBus()
 
-class CheckToken():
-    def test(self):
-        print("*** CheckToken ***");
+
 
 class ClienteList(Resource,CustomException):
+    cliente=ClienteBus()
+    item=ClienteItem()
+    
     def get(self):
         try:
             data= cliente.getAll()
@@ -64,13 +61,15 @@ class ClienteList(Resource,CustomException):
             item.habilitado=int(request.form['habilitado'].upper() == 'TRUE')     
             item.creado_por='test'
             res=cliente.insert(item)
-            message=error.getErrorMessage('','A0009',res)[0]["ErrorMessage"]
             return support_jsonp_ok(request.args,message)
         except  Exception as err:
             return self.showCustomException(err,request.args)
            
 
 class Cliente(Resource,CustomException):
+    cliente=ClienteBus()
+    item=ClienteItem()
+            
     def get(self, id):
         try:
             data= cliente.getById(id)
@@ -82,7 +81,6 @@ class Cliente(Resource,CustomException):
     def delete(self, id):
         try:
             res=cliente.delete(id)
-            message=error.getErrorMessage('','A0007',res)[0]["ErrorMessage"]
             return support_jsonp_ok(request.args,message)
         except  Exception as err:
             return self.showCustomException(err,request.args)
@@ -96,7 +94,6 @@ class Cliente(Resource,CustomException):
             item.habilitado=int(request.form['habilitado'].upper() == 'TRUE')     
             item.modificado_por="test"
             res=cliente.update(item)   
-            message=error.getErrorMessage('','A0008',res)[0]["ErrorMessage"]
             return support_jsonp_ok(request.args,message)
         except  Exception as err:
             return self.showCustomException(err,request.args)
