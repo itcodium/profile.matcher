@@ -1,3 +1,3 @@
 git add .
-git commit -m "Se elimina archivos para obtener datos de MySQL"
+git commit -m "Se agrega una url para consumir el chatbot"
 git push origin chatbot

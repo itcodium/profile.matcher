@@ -8,6 +8,7 @@ from flask_cors import CORS, cross_origin
 from api import support_jsonp
 from api import Cliente
 from api import ClienteList
+from api import ChatBotSowa
 
  
 application = Flask(__name__, static_url_path='')
@@ -32,9 +33,12 @@ def index():
 
 
 
+
 api = Api(application)
 api.add_resource(ClienteList, '/api/cliente')
 api.add_resource(Cliente, '/api/cliente/<id>')
+
+api.add_resource(ChatBotSowa, '/api/chatbot')
 
 if __name__ == "__main__":
 	application.run()

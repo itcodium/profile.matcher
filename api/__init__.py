@@ -10,3 +10,4 @@ from .support_jsonp	import support_jsonp_data
 #from .support_jsonp	import MyEncoder
 
 from .customException import CustomException
+from .chatBotSowa import ChatBotSowa
