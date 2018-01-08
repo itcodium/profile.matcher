@@ -55,7 +55,7 @@ except Exception as err:
 if (strEnvi=="development"):
     db_uri='mongodb://root:kAUmjz4Hxx36@192.168.220.128:27017',
 else:
-    db_uri='mongodb://userDT3:123123@127.0.0.1:27017',
+    db_uri='mongodb://userDT3:123123@mongodb:27017',
 
 
 print ("DB -> ", db_uri)

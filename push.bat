@@ -1,3 +1,3 @@
 git add .
-git commit -m "se modifica la propiedad a debug =False "
+git commit -m "Se modifica la coneccion a mongoDB"
 git push origin chatbot
