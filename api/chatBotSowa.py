@@ -96,6 +96,7 @@ class ChatBotSowa(Resource,CustomException):
             #return support_jsonp_custom(data,resource_fields)
             return support_jsonp_custom({"text":bot_output},resource_fields)
         except Exception as err:
+            print("Error ->  ",err);
             return self.showCustomException(err,request.args)
             
 

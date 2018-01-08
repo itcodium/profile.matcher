@@ -12,7 +12,7 @@ from api import ChatBotSowa
 
  
 application = Flask(__name__, static_url_path='')
-application.debug = True
+application.debug = False
 application.config['PROPAGATE_EXCEPTIONS'] = True
 CORS(application)
 json = FlaskJSON(application)
