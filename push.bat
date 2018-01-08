@@ -1,3 +1,3 @@
 git add .
-git commit -m "Se agrega una url para consumir el chatbot"
+git commit -m "Sea agrega chatterbot al archivo requirements.txt"
 git push origin chatbot
