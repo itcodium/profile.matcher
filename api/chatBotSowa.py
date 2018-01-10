@@ -106,11 +106,11 @@ class ChatBotSowa(Resource,CustomException):
                 client = MongoClient(db_uri)
                 db=client.admin
                 serverStatusResult=db.command("serverStatus")
-                print(serverStatusResult)
+                print("RESULT :) -> ",serverStatusResult)
             except Exception as err:
-                print("Error ->  ",err);
+                print("Error -> : ( ",err);
 
-            print("******************** request ",request);
+            print("******************** request ");
             #usr_input=request.args.get('text')
             # bot_output = 'bot.get_response(usr_input)'
             #return support_jsonp_custom(data,resource_fields)
