@@ -96,19 +96,20 @@ from pymongo import MongoClient
 from pprint import pprint
 # connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
 
-try:
-    client = MongoClient(db_uri)
-    db=client.admin
-    serverStatusResult=db.command("serverStatus")
-    print(serverStatusResult)
 
-except Exception as err:
-    print("Error ->  ",err);
 
 
 class ChatBotSowa(Resource,CustomException):
     def get(self):
         try:
+            try:
+                client = MongoClient(db_uri)
+                db=client.admin
+                serverStatusResult=db.command("serverStatus")
+                print(serverStatusResult)
+            except Exception as err:
+                print("Error ->  ",err);
+
             print("******************** request ",request);
             #usr_input=request.args.get('text')
             # bot_output = 'bot.get_response(usr_input)'
