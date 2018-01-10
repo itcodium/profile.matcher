@@ -101,6 +101,7 @@ from pprint import pprint
 
 class ChatBotSowa(Resource,CustomException):
     def get(self):
+        os_env=""
         try:
             mon="MONGODB_DATABASE"
             try:
