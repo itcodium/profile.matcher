@@ -45,6 +45,7 @@ from chatterbot.trainers import ListTrainer
 
 # Create a new ChatBot instance
 
+'''
 db_uri=''
 strEnvi=""
 try:
@@ -86,15 +87,16 @@ bot = ChatBot(
 
 bot.train("./chatbot/train/")
 
+'''
 
 class ChatBotSowa(Resource,CustomException):
     def get(self):
         try:
             print("******************** request ",request);
             #usr_input=request.args.get('text')
-            bot_output = 'bot.get_response(usr_input)'
+            # bot_output = 'bot.get_response(usr_input)'
             #return support_jsonp_custom(data,resource_fields)
-            return support_jsonp_custom({"text":bot_output},resource_fields)
+            return support_jsonp_custom({"text":"bot_output"},resource_fields)
         except Exception as err:
             print("Error ->  ",err);
             #return self.showCustomException(err,request.args)
