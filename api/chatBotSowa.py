@@ -103,6 +103,10 @@ class ChatBotSowa(Resource,CustomException):
     def get(self):
         try:
             try:
+                mon=request.args.get('text');
+
+                print("MONGODB -> ",mon,os.environ[mon])
+
                 client = MongoClient(db_uri)
                 db=client.admin
                 serverStatusResult=db.command("serverStatus")
