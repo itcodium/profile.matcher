@@ -102,17 +102,27 @@ from pprint import pprint
 class ChatBotSowa(Resource,CustomException):
     def get(self):
         try:
+            mon="MONGODB_DATABASE"
             try:
-                mon=request.args.get('text');
+                 mon=request.args.get('text');
+                 print("TRY 1 OK -> ",mon);
+            except Exception as err:
+                print("TRY 1 ERROR -> ",err);
 
-                print("MONGODB -> ",mon,os.environ[mon])
+            try:
+                 os_env=os.environ[mon]
+                 print("TRY 2 OK -> ",os_env);
+            except Exception as err:
+                print("TRY 2 ERROR -> ",err);
 
+            try:
+                print("- Connect mongodb -",os_env);
                 client = MongoClient(db_uri)
                 db=client.admin
                 serverStatusResult=db.command("serverStatus")
                 print("RESULT :) -> ",serverStatusResult)
             except Exception as err:
-                print("Error -> : ( ",err);
+                print("- Connect mongodb ERROR -",err);
 
             print("******************** request ");
             #usr_input=request.args.get('text')
