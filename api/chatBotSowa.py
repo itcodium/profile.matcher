@@ -45,7 +45,6 @@ from chatterbot.trainers import ListTrainer
 
 # Create a new ChatBot instance
 
-'''
 db_uri=''
 strEnvi=""
 try:
@@ -60,6 +59,9 @@ else:
 
 
 print ("DB -> ", db_uri)
+
+'''
+
 
 bot = ChatBot(
     'Terminal',
@@ -88,6 +90,21 @@ bot = ChatBot(
 bot.train("./chatbot/train/")
 
 '''
+
+from pymongo import MongoClient
+# pprint library is used to make the output look more pretty
+from pprint import pprint
+# connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
+
+try:
+    client = MongoClient(db_uri)
+    db=client.admin
+    serverStatusResult=db.command("serverStatus")
+    print(serverStatusResult)
+
+except Exception as err:
+    print("Error ->  ",err);
+
 
 class ChatBotSowa(Resource,CustomException):
     def get(self):
