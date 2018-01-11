@@ -1,3 +1,3 @@
 git add .
-git commit -m "Test (+ +) os.environ mongoDB VI"
+git commit -m "Test ( admin user ) os.environ mongoDB VI"
 git push origin chatbot

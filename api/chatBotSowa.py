@@ -55,12 +55,17 @@ except Exception as err:
 if (strEnvi=="development"):
     db_uri='mongodb://root:kAUmjz4Hxx36@192.168.220.128:27017',
 else:
-    db_uri='mongodb://chatbot:kAUmjz4Hxx36@mongodb:27017',
+    db_uri='mongodb://admin:kAUmjz4Hxx36@mongodb:27017',
 
 
 print ("DB -> ", db_uri)
 
+
 '''
+       Username: chatbot@admin
+       Password: kAUmjz4Hxx36
+  Database Name: chatbot
+ Connection URL: mongodb://chatbot@admin:kAUmjz4Hxx36@mongodb/chatbot
 
 
 bot = ChatBot(
