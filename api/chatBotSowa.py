@@ -61,12 +61,6 @@ else:
 print ("DB -> ", db_uri)
 
 
-'''
-       Username: chatbot@admin
-       Password: kAUmjz4Hxx36
-  Database Name: chatbot
- Connection URL: mongodb://chatbot@admin:kAUmjz4Hxx36@mongodb/chatbot
-
 
 bot = ChatBot(
     'Terminal',
@@ -89,25 +83,29 @@ bot = ChatBot(
     database='chatbot'
     )
 
-
-
-
-bot.train("./chatbot/train/")
-
 '''
 
-from pymongo import MongoClient
-# pprint library is used to make the output look more pretty
-from pprint import pprint
-# connect to MongoDB, change the << MONGODB URL >> to reflect your own connection string
+ 
+       Username: chatbot@admin
+       Password: kAUmjz4Hxx36
+  Database Name: chatbot
+ Connection URL: mongodb://chatbot@admin:kAUmjz4Hxx36@mongodb/chatbot
 
 
+'''
+bot.train("./chatbot/train/")
+
+
+
+#from pymongo import MongoClient
+#from pprint import pprint
 
 
 class ChatBotSowa(Resource,CustomException):
     def get(self):
         os_env=""
         try:
+            '''
             mon="MONGODB_DATABASE"
             try:
                  mon=request.args.get('text');
@@ -129,7 +127,7 @@ class ChatBotSowa(Resource,CustomException):
                 print("RESULT :) -> ",serverStatusResult)
             except Exception as err:
                 print("- Connect mongodb ERROR -",err);
-
+            '''
             print("******************** request ");
             #usr_input=request.args.get('text')
             # bot_output = 'bot.get_response(usr_input)'
