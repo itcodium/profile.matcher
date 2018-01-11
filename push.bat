@@ -1,3 +1,3 @@
 git add .
-git commit -m "Test ( Test Chatbot on MongoDB ) os.environ mongoDB VI"
+git commit -m "yeah!!  Test Chatbot on MongoDB"
 git push origin chatbot
