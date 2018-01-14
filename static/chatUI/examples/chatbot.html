@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<head>
+  <title>ChatUI</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../build/chatUI.css">
+  <meta name="viewport" content="width=device-width">
+  <style>
+    html, body{
+      margin:0;
+      padding:0;
+      border:0;
+    }
+    #chatbot{
+      width:100%;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <div id="chatbot">
+  </div>
+  <script src="https://d3js.org/d3.v4.min.js"></script>
+  <script src="../build/index-d3.min.js"></script>
+
+	<script src="jquery-3.2.1.min.js"></script>
+
+  <script type="text/javascript">
+  
+  var ChatBotSowa=function(chat){
+	var _this=this;
+	var url="http://chatbot-chatbot01.7e14.starter-us-west-2.openshiftapps.com/api/chatbot?text="
+	_this.total=0;
+	_this.msg=[];
+
+
+	this.sendMessage=function(msg){
+	 console.log("msg",url+msg)
+		  $.ajax(url+msg, {
+		      success: function(data) {
+		         console.log("data",data)
+		         _this.print(data.text)
+		      },
+		      error: function(error) {
+		        console.log("error", error) 
+		      }
+		   });
+	 
+	}
+	
+	this.getMessage=function(msg){
+		var delay=	msg.length * 50; 
+		return { type: 'text', value: msg, class: 'bot', delay: delay }
+	};
+	this.print=function(msg){
+		console.log("msg",typeof msg)
+		if(typeof msg=="string"){
+			chat.addBubble(_this.getMessage(msg), function (){});
+		}
+		else{
+			chat.addBubble(_this.getMessage(msg[_this.total]), function (){
+				_this.total++
+				if(_this.total<msg.length){
+					_this.print(msg)
+				}else{
+					_this.showInput();
+				}
+			});
+		}
+		
+	}
+	
+	this.writeMessage=function(msg){
+		_this.total=0;
+		_this.print(msg)
+	}
+	
+	this.showUserInput=function (){
+		chat.showInput(function(input){
+			chat.addBubble({ type: 'text', value: input, class: 'human', delay: 0 });
+			_this.sendMessage(input);
+			/*
+				chat.hideInput();
+			*/
+		  });
+	}
+	
+}
+
+
+
+
+    var chat = chatUI(d3.select('#chatbot'));
+	
+	var appChat=new ChatBotSowa(chat)
+		// appChat.writeMessage(['Hi there!','What is your name?'])
+		appChat.showUserInput()
+
+
+    // chat.addBubble({ type: 'text', value: 'Hi there!', class: 'bot', delay: 1000 }, function () {});
+    
+
+      //chat.addBubble({ type: 'text', value: 'What is your name?', class: 'bot', delay: 0 });
+	  /*
+	function showInput(chat){
+		chat.showInput(function(input){
+			//As input arrives, present the input
+			chat.addBubble({ type: 'text', value: input, class: 'human', delay: 0 });
+			//Hide the input container
+			chat.hideInput();
+		  });
+
+	}
+	*/
+	
+	// cHAT RESPONSE
+	/*
+	//And welcome the user with her name
+	chat.addBubble({ type: 'text', value: 'Hello '+input, class: 'bot', delay: 500 });
+	*/
+			
+
+			
+			
+  </script>
+</body>
+</html>
