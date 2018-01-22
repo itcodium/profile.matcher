@@ -7,7 +7,7 @@ from .support_jsonp import support_jsonp_error
 class CustomException():
     
     def showCustomException(self,err,parameters):
-        print("#SCE1") 
+        print("#SCE1",err) 
         status=500
         if len(err.args)==1:
             print("#SCE2",type(err),str(err).replace("'",""))
