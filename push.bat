@@ -1,3 +1,3 @@
 git add .
-git commit -m "Se agrega la libreria D3 JS customizada para poder ser reutilizada."
+git commit -m "Se agrega insert en mongo."
 git push origin chatbot

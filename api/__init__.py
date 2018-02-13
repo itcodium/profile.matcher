@@ -13,3 +13,5 @@ from .customException import CustomException
 from .chatBotSowa import ChatBotSowa
 from .chatBotSowa import ChatBotTrainSowa
 from .chatBotSowa import ChatBotDBTest
+from .ingles import Ingles
+from .ingles import InglesList
