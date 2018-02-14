@@ -31,10 +31,11 @@ from .support_jsonp import support_jsonp_ok
 from .support_jsonp import support_jsonp_data
 
 from pymongo import MongoClient
-
+'''
 resource_fields = {
     'text':fields.String
 }
+'''
 
 
  
@@ -60,7 +61,9 @@ class InglesList(Resource,CustomException):
     db=client['chatbot']
     def get(self):
         try:
-            return  support_jsonp_data(dumps(self.db['phrases'].find(),default=json_util.default))
+            data=self.db['phrases'].find()
+            print("type -> ",type(data))
+            return support_jsonp_data( dumps(self.db['phrases'].find(), ensure_ascii=False))
         except Exception as err:
             return self.showCustomException(err,request.args)
 

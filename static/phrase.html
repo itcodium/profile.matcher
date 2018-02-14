@@ -5,7 +5,13 @@
 		
 <script src="assets/plugins/angular/angular.min.js"></script>
 <script src="assets/plugins/angular/angular-route.js"></script>
-		
+<link href="assets/plugins/uniform/css/uniform.default.min.css" rel="stylesheet"/>
+        <link href="assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+<style>
+body{
+padding:10px;
+}
+</style>		
 <script type="text/javascript">
 
 var app = angular.module('postserviceApp', []);
@@ -30,7 +36,9 @@ app.controller('postserviceCtrl', function ($scope, $http) {
 	$scope.postdata = function () {
 	      $http.post('/api/ingles', $scope.phrase, config)
                        .then(function (response) {
-							console.log(response);
+								$scope.msg=response.statusText;
+								$scope.statusval=response.status;
+								$scope.phrase={};
                            });
 	};
 		
@@ -40,17 +48,32 @@ app.controller('postserviceCtrl', function ($scope, $http) {
 
     </head>
     <body  >
-      <div ng-app="postserviceApp" ng-controller="postserviceCtrl">
+	
+	<form ng-app="postserviceApp" ng-controller="postserviceCtrl">
+		  <div class="form-group">
+			<label for="us">US</label>
+			<textarea type="text" ng-model="phrase.us" class="form-control" id="us" aria-describedby="emailHelp" placeholder="Texto en ingles."></textarea>
+			<small id="emailHelp" class="form-text text-muted">Ingresar frase en ingles</small>
+		  </div>
+		  <div class="form-group">
+			<label for="es">ES</label>
+			<textarea ng-model="phrase.es" type="text" class="form-control" id="es" placeholder="Texto en español"></textarea>
+		  </div>
+		  <div class="form-group">
+			<label for="meaning">Meaning</label>
+			<textarea ng-model="phrase.meaning" type="text" class="form-control" id="meaning" placeholder="Significado del texto.">
+			</textarea>
+		  </div>
+		  <button type="button" class="btn btn-primary" ng-click="postdata()">Submit</button>
+		  
+		  
+		  <div ng-if="msg" class="alert alert-primary" role="alert">
+			<p>Output Message : {{msg}}</p>
+			<p>StatusCode: {{statusval}}</p>
+		  </div>
+</form>
+ 
 
-<div>
-	Us : <input ng-model="phrase.us" /><br/><br/>
-	Es: <input ng-model="phrase.es" /><br/><br/>
-	<input type="button" value="Send" ng-click="postdata()" /> <br/><br/>
-</div>
-<p>Output Message : {{msg}}</p>
-<p>StatusCode: {{statusval}}</p>
-<p>Status: {{statustext}}</p>
-<p>Response Headers: {{headers}}</p>
 
 </div>
 
