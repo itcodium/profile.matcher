@@ -13,11 +13,12 @@ from api import ChatBotTrainSowa
 from api import ChatBotDBTest
 from api import Ingles
 from api import InglesList
+from api import categoriasList
  
 application = Flask(__name__, static_url_path='')
 application.debug = True
 application.config['PROPAGATE_EXCEPTIONS'] = True
-CORS(application)
+CORS(application, supports_credentials=True)
 json = FlaskJSON(application)
 
 
@@ -45,6 +46,7 @@ api.add_resource(ChatBotSowa, '/api/chatbot')
 api.add_resource(ChatBotTrainSowa, '/api/train')
 api.add_resource(ChatBotDBTest, '/api/db')
 api.add_resource(InglesList, '/api/ingles')
+api.add_resource(categoriasList, '/api/ingles/categories')
 api.add_resource(Ingles, '/api/cliente/<id>')
 
 

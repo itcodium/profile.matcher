@@ -61,9 +61,10 @@ class InglesList(Resource,CustomException):
     db=client['chatbot']
     def get(self):
         try:
+            category=request.args.get('category')
             data=self.db['phrases'].find()
-            print("type -> ",type(data))
-            return support_jsonp_data( dumps(self.db['phrases'].find(), ensure_ascii=False))
+            print("{category:category}",category)
+            return support_jsonp_data( dumps(self.db['phrases'].find({"category":category}), ensure_ascii=False))
         except Exception as err:
             return self.showCustomException(err,request.args)
 
@@ -113,3 +114,24 @@ class Ingles(Resource,CustomException):
         except  Exception as err:
             return self.showCustomException(err,request.args)
         '''
+
+
+
+
+class categoriasList(Resource,CustomException):
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+    def get(self):
+        try:
+            data=self.db['phrases_category'].find()
+            return support_jsonp_data( dumps(self.db['phrases_category'].find(), ensure_ascii=False))
+        except Exception as err:
+            return self.showCustomException(err,request.args)
+
+    def post(self):
+        try:
+            category = self.db['phrases_category']
+            category_id = category.insert_one(request.form.to_dict())
+            support_jsonp_data(phrase_id)
+        except  Exception as err:
+            return self.showCustomException(err,request.args)

@@ -15,3 +15,4 @@ from .chatBotSowa import ChatBotTrainSowa
 from .chatBotSowa import ChatBotDBTest
 from .ingles import Ingles
 from .ingles import InglesList
+from .ingles import categoriasList

@@ -1,3 +1,3 @@
 git add .
-git commit -m "Se actualiza el formulario insert de palabras."
+git commit -m "Categorias alta."
 git push origin chatbot
