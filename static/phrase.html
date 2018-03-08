@@ -50,7 +50,13 @@ app.controller('postserviceCtrl', function ($scope, $http) {
     <body  >
 	
 	<form ng-app="postserviceApp" ng-controller="postserviceCtrl">
-		  <div class="form-group">
+		  
+          <div class="form-group">
+            <label for="us">Category</label>
+            <input type="text" ng-model="phrase.category" class="form-control" id="category" aria-describedby="categoryHelp" placeholder="Categoria"></textarea>
+            <small id="categoryHelp" class="form-text text-muted">Ingresar categoria</small>
+          </div>
+          <div class="form-group">
 			<label for="us">US</label>
 			<textarea type="text" ng-model="phrase.us" class="form-control" id="us" aria-describedby="emailHelp" placeholder="Texto en ingles."></textarea>
 			<small id="emailHelp" class="form-text text-muted">Ingresar frase en ingles</small>
