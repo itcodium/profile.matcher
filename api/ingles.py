@@ -64,7 +64,7 @@ class InglesList(Resource,CustomException):
             category=request.args.get('category')
             data=self.db['phrases'].find()
             print("{category:category}",category)
-            return support_jsonp_data( dumps(self.db['phrases'].find({"category":category}), ensure_ascii=False))
+            return support_jsonp_data( dumps(self.db['phrases'].find({"category": category }), ensure_ascii=False))
         except Exception as err:
             return self.showCustomException(err,request.args)
 
@@ -124,6 +124,7 @@ class categoriasList(Resource,CustomException):
     def get(self):
         try:
             data=self.db['phrases_category'].find()
+            print("data", data)
             return support_jsonp_data( dumps(self.db['phrases_category'].find(), ensure_ascii=False))
         except Exception as err:
             return self.showCustomException(err,request.args)
@@ -132,6 +133,6 @@ class categoriasList(Resource,CustomException):
         try:
             category = self.db['phrases_category']
             category_id = category.insert_one(request.form.to_dict())
-            support_jsonp_data(phrase_id)
+            support_jsonp_data(category_id)
         except  Exception as err:
             return self.showCustomException(err,request.args)
