@@ -4,6 +4,8 @@ var APP_API= {
     USUARIOS: "usuario",
     PERFIL: "perfil",
     getUrl: function (api, param) {
+        console.log("++++++++++ api, param",api, param)
+        
         if (typeof param!='undefined'){
             return this.APP_URL + this[api.toUpperCase()] + "/" + param + "?" + this.APP_TOKEN;
         } else {

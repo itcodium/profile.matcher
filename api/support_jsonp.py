@@ -92,13 +92,14 @@ def support_jsonp_error(err,parameters):
 
 
 def support_jsonp_ok(parameters,pMessage=None):
+    callback =getCallback(parameters)
     try:
         if pMessage==None:
             message="Error application"#error.getErrorMessage('','A0006')[0]["ErrorMessage"]
         else:
             message=pMessage  
               
-        callback =getCallback(parameters)
+        
         res=""
         if callback!=None: 
             res =str(callback) + '(' + '{status:"OK", message:"'+message+'"}'+ ')'
@@ -107,7 +108,10 @@ def support_jsonp_ok(parameters,pMessage=None):
             res ='{"status":"OK", "message":"'+message+'"}'
             return current_app.response_class(res, mimetype='application/json')     
     except  Exception as err:
-        return self.showCustomException(err,request.args)    
+        print("err",err)
+        res =str(callback) + '(' + '{status:"OK", message:"'+'test ++++ '+'"}'+ ')'
+        return current_app.response_class(res, mimetype='application/json')     
+        #return self.showCustomException(err,request.args)    
     
 
 def getCallback(parameters):

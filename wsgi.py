@@ -13,7 +13,8 @@ from api import ChatBotTrainSowa
 from api import ChatBotDBTest
 from api import Ingles
 from api import InglesList
-from api import categoriasList
+from api import Categories
+from api import CategoriesList
  
 application = Flask(__name__, static_url_path='')
 application.debug = True
@@ -45,9 +46,13 @@ api.add_resource(Cliente, '/api/cliente/<id>')
 api.add_resource(ChatBotSowa, '/api/chatbot')
 api.add_resource(ChatBotTrainSowa, '/api/train')
 api.add_resource(ChatBotDBTest, '/api/db')
-api.add_resource(InglesList, '/api/ingles')
-api.add_resource(categoriasList, '/api/ingles/categories')
-api.add_resource(Ingles, '/api/cliente/<id>')
+api.add_resource(Ingles, '/api/ingles/phrases/<id>')
+api.add_resource(InglesList, '/api/ingles/phrases')
+
+api.add_resource(Categories, '/api/ingles/categories/<id>')
+api.add_resource(CategoriesList, '/api/ingles/categories')
+
+
 
 
 

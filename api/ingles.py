@@ -31,6 +31,8 @@ from .support_jsonp import support_jsonp_ok
 from .support_jsonp import support_jsonp_data
 
 from pymongo import MongoClient
+from bson.objectid import ObjectId
+
 '''
 resource_fields = {
     'text':fields.String
@@ -72,53 +74,44 @@ class InglesList(Resource,CustomException):
         try:
             phrases = self.db['phrases']
             phrase_id = phrases.insert_one(request.form.to_dict())
-            support_jsonp_data(phrase_id)
+            return support_jsonp_ok({},"Se ha insertado un registro.")
         except  Exception as err:
             return self.showCustomException(err,request.args)
 
 
 class Ingles(Resource,CustomException):
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+    phrases = db['phrases']
     def get(self, id):
         try:
-            phrases = self.db['phrases']
             return  support_jsonp_data(phrases.find_one({"_id": id}))
         except  Exception as err:
             return self.showCustomException(err,request.args)
                 
-    def delete(self, id):
-        return '{"test":"test"}'
-        '''
-        try:
-            print("33")
-            res=modulo.delete(id)
-            message=error.getErrorMessage('','A0007',res)[0]["ErrorMessage"]
-            return support_jsonp_ok(request.args,message)
-        except  Exception as err:
-            return self.showCustomException(err,request.args)
-        '''
-
     def put(self,id):
-        return '{"test":"test"}'
-        '''
         try:
-            
-            item.id_modulo=id
-            item.modulo=request.form['modulo']
-            item.vigencia_desde=request.form['vigencia_desde']
-            item.vigencia_hasta=request.form['vigencia_hasta']
-            item.modificado_por=request.form['modificado_por']
+            item=request.form.to_dict()
+            item.pop('_id[$oid]', None)
+            item.pop('$$hashKey', None)
+            self.phrases.update_one( {"_id": ObjectId(id)},  {"$set": item})
+            return support_jsonp_ok({},"Se ha actualizado un registro.")
 
-            res=modulo.update(item)   
-            message=error.getErrorMessage('','A0008',res)[0]["ErrorMessage"]
-            return support_jsonp_ok(request.args,message)
         except  Exception as err:
             return self.showCustomException(err,request.args)
-        '''
+
+    def delete(self,id):
+        try:
+            self.phrases.delete_many( {"_id": ObjectId(id)})
+            return support_jsonp_ok({},"Se ha borrado un registro.")
+        except  Exception as err:
+            return self.showCustomException(err,request.args)
+        
 
 
 
 
-class categoriasList(Resource,CustomException):
+class CategoriesList(Resource,CustomException):
     client = MongoClient(db_uri)
     db=client['chatbot']
     def get(self):
@@ -133,6 +126,37 @@ class categoriasList(Resource,CustomException):
         try:
             category = self.db['phrases_category']
             category_id = category.insert_one(request.form.to_dict())
-            support_jsonp_data(category_id)
+            return support_jsonp_ok({},"Se ha insertado un registro.")
         except  Exception as err:
             return self.showCustomException(err,request.args)
+
+
+
+class Categories(Resource,CustomException):
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+    def get(self, id):
+        try:
+            phrases = self.db['phrases']
+            return  support_jsonp_data(phrases.find_one({"_id": id}))
+        except  Exception as err:
+            return self.showCustomException(err,request.args)
+                
+    def put(self,id):
+        try:
+            item=request.form.to_dict()
+            item.pop('_id[$oid]', None)
+            item.pop('$$hashKey', None)
+            categories = self.db['phrases_category']
+            data=categories.update_one( {"_id": ObjectId(id)},  {"$set": item})
+            return support_jsonp_ok({},"Se ha actualizado un registro.")
+        except  Exception as err:
+            return self.showCustomException(err,request.args)
+    def delete(self,id):
+        try:
+            categories = self.db['phrases_category']
+            categories.delete_many( {"_id": ObjectId(id)})
+            return support_jsonp_ok({},"Se ha borrado un registro.")
+        except  Exception as err:
+            return self.showCustomException(err,request.args)
+
