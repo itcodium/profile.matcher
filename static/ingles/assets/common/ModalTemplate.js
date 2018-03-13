@@ -47,7 +47,7 @@ var ModalTemplate = function () {
                 this.setItem(index)
             }
         }
-        else {this.resetModel();}
+        // else {this.resetModel();}
         this.method = method;
         this.show();
     }

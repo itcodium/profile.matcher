@@ -1,4 +1,4 @@
-<div class="form-group" ng-if="input.method!='EDIT'">
+<div class="form-group" ng-if="input.method=='DELETE'">
     <label for="category">{{input.pageText.category}}</label>
     <input class="form-control"  ng-disabled="input.method=='DELETE' || input.method=='ADD'" minlength="4" maxlength="64" name="category" id="category" required="required" ng-model="input.model.category">
     
@@ -8,7 +8,7 @@
     </div>
 </div>
 
-<div class="form-group" ng-if="input.method=='EDIT'">
+<div class="form-group" ng-if="input.method=='EDIT' || input.method=='ADD'">
     <label for="category">{{input.pageText.category}}</label>
      <select class="form-control" name="category" id="category" ng-model="input.model.category">
       <option ng-repeat="item in input.categories" value="{{item.category}}">{{item.category}}</option>

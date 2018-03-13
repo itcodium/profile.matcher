@@ -1,7 +1,7 @@
   <!-- https://github.com/ionic-team/ionicons  -->
 
     <div class="p-3 mb-2 bg-gradient-info text-white" ng-if="modalEdit.items.length==0">
-        {{pageText.emptyList}}
+        {{pageText.emptyList}} <a ng-click="modalEdit.open('ADD')" class="btn btn-primary" >+</a>
     </div>
     
     <div class="col-sm-12" ng-if="modalEdit.items.length">

@@ -36,6 +36,10 @@ var PhrasesModule = (function () {
         $scope.modalEdit.pageText = $scope.pageText;
         $scope.modalEdit.AplicationText = AplicationText;
  
+        $scope.modalEdit.category=$location.search();
+        $scope.modalEdit.model={};
+        $scope.modalEdit.model.category=$location.search().category;
+        $scope.modalEdit.categories=JSON.parse(localStorage.getItem("categories"));
         $scope.modalEdit.submit = function (form) {
             this.form = form;
             if (form.$valid) {
@@ -47,6 +51,7 @@ var PhrasesModule = (function () {
                     apiF.delete($scope.modalEdit.model._id.$oid, Delete_callBack);
                 }
                 if (this.method == "ADD") {
+                    
                     $scope.modalEdit.model.creado_por="test"
                     apiF.post($scope.modalEdit.model, Post_callBack);
                 }
@@ -54,10 +59,7 @@ var PhrasesModule = (function () {
         }
      
             
-        $scope.modalEdit.category="test";// $location.search();
-        $scope.modalEdit.model={};
-        $scope.modalEdit.model.category="Test";//$location.search().category;
-        $scope.modalEdit.categories=JSON.parse(localStorage.getItem("categories"));
+        
         
         
  
