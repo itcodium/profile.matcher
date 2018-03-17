@@ -6,15 +6,22 @@
 
  var ApiCaller=function () {
      
-    this.params={};
-    this.apiName="";
+    var _params={};
+    // this.apiName="";
+    var apiName;
+    var get_callback;
+    var put_callback;
+    var post_callback;
+    var delete_callback;
+
     var scope={};
-    // this.scope={};
     _this=this;
+
+    this.setRoute=function(param){
+        apiName=param;
+    }
     this.setScope=function(param){
         scope=param;
-        // this.scope=param;
-        //_this.scope=param;
     }
     this.getScope=function(){
         return scope;
@@ -40,78 +47,112 @@
     }
     
     this.get = function (params,callback) {
-        console.log("GET", _this.apiName)
-        _this.params=params;
-       this.caller.get(APP_API.getUrl(_this.apiName), _this.params)
-            .then(callback, this.error)
+        _params=params;
+        var url=APP_API.getUrl(apiName);
+        if(typeof callback!='undefined'){
+            get_callback=callback;
+        }
+        this.caller.get(url, typeof _params=='undefined'?{}:_params)
+            .then(get_callback, this.error)
     }
+
     this.getById = function (id,params,callback) {
         _this.params=params;
         _this.id=id;
-
-        this.caller.get(APP_API.getUrl(_this.apiName, _this.id), _this.params)
+        this.caller.get(APP_API.getUrl(apiName, _this.id), _this.params)
             .then(callback, this.error)
     }
     
     this.put = function (id,data,callback) {
-        console.log("PUT", _this.apiName)
-        var url=APP_API.getUrl(_this.apiName, id);
+        if(typeof callback!='undefined'){
+            put_callback=callback;
+        }
+        var url=APP_API.getUrl(apiName, id);
         this.caller.put(url, data)
-            .then(callback, this.error)
+            .then(put_callBack, this.error)
     }
 
     
     this.post = function (data, callback) {
-        console.log("POST", _this.apiName)
-        var url=APP_API.getUrl(_this.apiName);
+        console.log("POST", apiName)
+        if(typeof callback!='undefined'){
+            post_callback=callback;
+        }
+        var url=APP_API.getUrl(apiName);
         this.caller.post( url, data)
-            .then(callback, this.error)
+            .then(post_callback, this.error)
     }
    
     this.delete = function (id, callback) {
-        console.log("DELETE", _this.apiName)
-        var url=APP_API.getUrl(_this.apiName, id);
+        if(typeof callback!='undefined'){
+            delete_callback=callback;
+        }
+        
+        console.log("DELETE", apiName)
+
+        var url=APP_API.getUrl(apiName, id);
         this.caller.delete(url, {})
-            .then(callback, this.error)
+            .then(delete_callback, this.error)
     }
     
-
-
-
-    /*
-    this.Get_callBack=function(res) {
-        console.log("_this.scope",_this.scope)
-        _this.scope.modalEdit.items = res.data;
+    var get_callback=function(res) {
+        scope.modalEdit.items = res.data;
     }
-    this.Put_callBack=function(res) {
+
+    var put_callBack =function(res) {
         console.log("Put_callBack -> ",res)
-        if (!_this.isError(res)) {
+        if (!scope.api.isError(res)) {
             if (res.status != 200) {
                 alert(res.message);
             } else {
                 scope.modalEdit.hide();
-                if(typeof _this.params=='undefined'){
-                    _this.get();    
+                console.log("PUT params",_params)
+
+                if(typeof _params=='undefined'){
+                    scope.api.get();    
                 }else{
-                    _this.get(_this.params);
+                    scope.api.get(_params,undefined);
                 }
-                
             }
         }
     }
-    this.Post_callBack = function (res) {
-        if (!_this.isError(res)) {
-            if (res.data.status != 'OK') {
+
+     var post_callback = function (res) {
+        console.log("Post_callBack -> ",res)
+        if (!scope.api.isError(res)) {
+            if (res.status != 200) {
                 alert(res.message);
             } else {
-                scope.modalEdit.items.push(scope.modalEdit.model)
                 scope.modalEdit.hide();
-                _this.get();
+                console.log("POST params",_params)
+                if(typeof _params=='undefined'){
+                    scope.api.get();    
+                }else{
+                    scope.api.get(_params,undefined);
+                }
+            }
+        }
+    }
+  
+   var delete_callback = function (res) {
+        console.log("Post_callBack -> ",res)
+        if (!scope.api.isError(res)) {
+            if (res.status != 200) {
+                alert(res.message);
+            } else {
+                scope.modalEdit.hide();
+                console.log("DELETE params",_params)
+                if(typeof _params=='undefined'){
+                    scope.api.get();    
+                }else{
+                    scope.api.get(_params,undefined);
+                }
             }
         }
     }
 
-
+     /*
+  
     this.Delete_callBack = function (res) {
         if (!_this.isError(res)) {
             if (res.status != 200) {
@@ -125,3 +166,6 @@
     */
 };
 
+
+
+ 

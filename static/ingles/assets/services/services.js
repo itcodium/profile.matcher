@@ -12,7 +12,9 @@ angular.module('app.services', [])
 
         this.get = function(url,parametros) {
             console.log(" AppServiceCaller -> url,parametros", url,parametros)
+             console.log("-----------------------------------------------------")
              return $http.get(url, { params: parametros }, {});
+
         };
         this.post = function (url, parametros) {
             return $http.post(url, $httpParamSerializerJQLike(parametros), config).then(response, error);

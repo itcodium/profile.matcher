@@ -6,11 +6,11 @@ app.config(function ($routeProvider) {
     $routeProvider
         .when('/', {
             templateUrl: 'assets/pages/categories/list.html',
-            controller: 'homeController'
+            controller: 'controllerCategoriesList'
         })
          .when('', {
-             templateUrl: 'assets/pages/categories/list.html',
-             controller: 'homeController'
+             templateUrl: 'assets/pages/index.html#/categories/list',
+             controller: 'controllerCategoriesList'
          })
         .when('/categories/list', {
             templateUrl: 'assets/pages/categories/list.html',
