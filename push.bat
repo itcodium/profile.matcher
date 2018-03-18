@@ -1,3 +1,3 @@
 git add .
-git commit -m "2018-03-18 Alta masiva de palabras."
+git commit -m "2018-03-18 cambio url front end"
 git push origin chatbot
