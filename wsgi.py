@@ -1,9 +1,15 @@
+import os
+import sys
+import inspect
+import csv
+from flask import request
 from flask import Flask
 from flask import jsonify 
 from flask_restful import Api
 from flask_json import FlaskJSON
 from flask_cors import CORS, cross_origin
-
+from flask import abort, redirect, url_for
+from flask import Blueprint, render_template
 
 from api import support_jsonp
 from api import Cliente
@@ -15,8 +21,34 @@ from api import Ingles
 from api import InglesList
 from api import Categories
 from api import CategoriesList
+from api import InglesAltaMasiva
  
-application = Flask(__name__, static_url_path='')
+current_folder = os.path.realpath(
+	os.path.abspath(
+		os.path.split(
+			inspect.getfile(
+				inspect.currentframe()
+			)
+	)[0]
+	)
+)
+
+
+print("---------------------------------------------")
+print("current_folder",current_folder)
+print("---------------------------------------------")
+
+
+
+application = Flask(__name__, 
+	static_url_path='',
+	#instance_path="\\static\\ingles",
+	instance_relative_config=True,
+	template_folder='templates')
+
+application.jinja_env.add_extension('jinja2.ext.loopcontrols')
+main = Blueprint('main', __name__, template_folder='templates')
+
 application.debug = True
 application.config['PROPAGATE_EXCEPTIONS'] = True
 CORS(application, supports_credentials=True)
@@ -28,15 +60,26 @@ json = FlaskJSON(application)
 @application.route('/test', methods=['GET'])
 @support_jsonp
 def test():
-       return '{"username":"username2017-08-05","email":"test@gmail.com","id":"1597"}'
+		return '{"username":"username2017-08-05","email":"test@gmail.com","id":"1597"}'
 
 @application.route('/')
 def index():
 	return application.send_static_file('index.html')
 
 
-
-
+@application.route('/api/upload', methods=['GET', 'POST'])
+def upload_file():
+	file=current_folder+"\\data\\"+request.files['file'].filename
+	altas=  InglesAltaMasiva()
+	if request.method == 'POST':
+		f = request.files['file']
+		f.save(file)
+		data =None
+		with open(file, 'r',encoding="utf-8") as csvfile:
+			spamreader = csv.DictReader(csvfile, delimiter='\t', quoting=csv.QUOTE_NONE) # quotechar=' '
+			data=altas.save(spamreader)
+		return render_template("upload.html", phrases=data)
+	return application.send_static_file('index.html')
 
 
 api = Api(application)

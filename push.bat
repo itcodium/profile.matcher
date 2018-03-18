@@ -1,3 +1,3 @@
 git add .
-git commit -m "2018-03-17 Se actualiza el alta y baja de registros"
+git commit -m "2018-03-18 Alta masiva de palabras."
 git push origin chatbot

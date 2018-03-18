@@ -17,3 +17,4 @@ from .ingles import Ingles
 from .ingles import InglesList
 from .ingles import Categories
 from .ingles import CategoriesList
+from .ingles import InglesAltaMasiva

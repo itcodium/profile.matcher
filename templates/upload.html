@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html ng-app="rrhh">
+    <head>
+        
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <title>English</title>
+        
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+        <meta charset="UTF-8">
+        <meta name="description" content="Descripcion de la aplicacion" />
+        <meta name="keywords" content="word1,word2" />
+        <meta name="author" content="" />
+        
+        <link href="../ingles/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <link href="../ingles/assets/libs/ionicons-2.0.1/css/ionicons.css" rel="stylesheet" type="text/css" />
+    </head>
+    <body ng-controller="appController">
+        <div class="page-inner">
+            <div class="container">
+                <a href="../ingles/index.html" class="btn btn-default">Home</a> 
+				<a href="../ingles/upload.html" class="btn btn-default" >Upload</a> 
+            </div>	
+            <page-title value="" ng-show='titulo'></page-title>
+            <div id="main-wrapper" class="container" style="padding:5px;">
+            	<h1>Resultado de la carga de datos</h1>
+	 			<div class="col-sm-12">
+	 				<table  class="table table-bordered">
+			            <thead>
+			                <tr class="row">
+			                    <th class="col-xs-4">US</th>
+			                    <th class="col-xs-4">ES</th>
+			                    <th class="col-xs-4">Alta</th>
+			                </tr>
+			            </thead>
+			            <tbody>
+			            	{% for p in phrases %}
+			                <tr class="row">
+									<td>{{ p.us }} </td>
+									<td>{{ p.es }}</td>
+									{% if p.alta=='true' %}
+									    <td style="background-color: green;">Ok</td>
+									  {% else %}
+									    <td style="background-color: red;">Ya existe.</td>
+									{% endif %}
+			                </tr>
+			                {% endfor %}
+			            </tbody>
+			        </table>
+			    </div>
+	        </div>
+            <page-footer value="footer"></page-footer>
+            
+				
+        </div><!-- Page Inner -->
+        <!-- Javascripts -->
+
+        
+        <script src="../ingles/assets/libs/jquery/jquery-2.1.3.min.js"></script>
+        <script src="../ingles/assets/libs/bootstrap/js/bootstrap.min.js"></script>
+        <script src="../ingles/assets/libs/angular/angular.min.js"></script>
+        <script src="../ingles/assets/libs/angular/angular-route.js"></script>
+        
+        <script src="../ingles/assets/common/ApiCaller.js"></script>
+        <script src="../ingles/assets/common/ModalTemplate.js"></script>
+        <script src="../ingles/assets/common/validations.js"></script>
+        <script src="../ingles/assets/common/JSArrays.js"></script>
+        <script src="../ingles/assets/app.js"></script>
+        <script src="../ingles/assets/app.config.js"></script>
+        <script src="../ingles/assets/app.routes.js"></script>
+        <script src="../ingles/assets/directives/directives.js"></script>
+        <script src="../ingles/assets/services/services.js"></script>
+        <script src="../ingles/assets/factory/factory.js"></script>
+        <script src="../ingles/assets/controllers/categories.js"></script>
+        <script src="../ingles/assets/controllers/phrases.js"></script>
+  
+    </body>
+</html>

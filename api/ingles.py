@@ -160,3 +160,36 @@ class Categories(Resource,CustomException):
         except  Exception as err:
             return self.showCustomException(err,request.args)
 
+class InglesAltaMasiva():
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+    phrases = db['phrases']
+    
+    def save(self, phrases):
+        listData = []
+        try:
+            for row in phrases:
+                try:
+                    item=self.phrases.find_one({"es": row["es"],"us": row["us"], "category":row["category"]})
+                    
+                    if item==None:
+                        r=self.phrases.insert_one(row)
+                        row["alta"]="true"
+                    else:
+                        row["alta"]="false"
+
+                    listData.append(row)
+                    
+                    '''
+                    try:
+                        result=self.phrases.delete_many({"_id": ObjectId(item["_id"])})
+                        print("Delete",result.deleted_count," - ",item["_id"])
+                    except  Exception as err:
+                        print ("Delete err",err)                        
+                    '''
+                except  Exception as err:
+                    print ("err",err)
+        except  Exception as err:
+            return  false
+        print("phrases -> ",phrases)    
+        return listData   
