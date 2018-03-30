@@ -18,3 +18,7 @@ from .ingles import InglesList
 from .ingles import Categories
 from .ingles import CategoriesList
 from .ingles import InglesAltaMasiva
+
+from .login import SignUp
+from .login import Login
+

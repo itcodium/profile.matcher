@@ -170,6 +170,7 @@ class InglesAltaMasiva():
         try:
             for row in phrases:
                 try:
+                    print("row",row)
                     item=self.phrases.find_one({"es": row["es"],"us": row["us"], "category":row["category"]})
                     
                     if item==None:
@@ -190,6 +191,6 @@ class InglesAltaMasiva():
                 except  Exception as err:
                     print ("err",err)
         except  Exception as err:
-            return  false
-        print("phrases -> ",phrases)    
+            print("phrases -> err ",err)    
+            
         return listData   
