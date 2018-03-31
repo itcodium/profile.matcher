@@ -68,6 +68,7 @@ class InglesList(Resource,CustomException):
             usr_id=request.args.get('u')
             user=self.users.find_one({"_id": ObjectId(usr_id)})
             phrases=None
+            print("InglesList -> user: ",user)
             if category in user: 
                 print("-------------- IN USER ----------------------")    
                 phrases=user[category]
