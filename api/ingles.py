@@ -61,12 +61,30 @@ import datetime
 class InglesList(Resource,CustomException):
     client = MongoClient(db_uri)
     db=client['chatbot']
+    users = db['users']
     def get(self):
         try:
             category=request.args.get('category')
-            data=self.db['phrases'].find()
-            print("{category:category}",category)
-            return support_jsonp_data( dumps(self.db['phrases'].find({"category": category }), ensure_ascii=False))
+            usr_id=request.args.get('u')
+            user=self.users.find_one({"_id": ObjectId(usr_id)})
+            phrases=None
+            if category in user: 
+                print("-------------- IN USER ----------------------")    
+                phrases=user[category]
+                return support_jsonp_data( dumps(phrases, ensure_ascii=False))
+            else:
+                print("-------------- NEW USER ----------------------")    
+                phrases=self.db['phrases'].find({"category": category })
+                phrases=dumps(phrases, ensure_ascii=False)
+                
+                data=json.loads(phrases);
+                for doc in data:
+                    doc["_id"]= doc["_id"]["$oid"]    
+                self.users.update_one( {"_id": ObjectId(usr_id)}, { '$push': { category: { '$each': data } } })
+                return support_jsonp_data(dumps(data, ensure_ascii=False))
+            
+
+            
         except Exception as err:
             return self.showCustomException(err,request.args)
 

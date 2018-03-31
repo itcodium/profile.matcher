@@ -56,27 +56,21 @@ class Login(Resource,CustomException):
     db=client['chatbot']
     users = db['users']
     def post(self):
-        print ("- 1 -")
         try:
-
             form=json.loads(request.data.decode('UTF-8'))
-            print ("- 2 -", form["email"],form["password"])
             item=self.users.find_one({"email": form["email"],"password":form["password"]})
-            print ("- 4 -",type(dumps(item, ensure_ascii=False)),dumps(item, ensure_ascii=False))
             data={}
-            if dumps(item, ensure_ascii=False)=='[]':
-                print ("- 5 -")
+
+            if dumps(item, ensure_ascii=False)=='[]' or item==None:
                 data= {"status":"error", "message":"Usuario o contraseña no validos."}
+                return support_jsonp_data(dumps(data, ensure_ascii=False))
             else:
-                print ("- 6 -")
                 if 'password' in item: 
                     del item['password']
-                print ("- 7 -",item)
                 item["status"]="ok"
                 data= dumps(item, ensure_ascii=False)
-
-            print ("- 8 -",data)
-            return support_jsonp_data(data)
+                return support_jsonp_data(data)
+                
         except Exception as err:
             return self.showCustomException(err,request.args)
 
@@ -98,33 +92,4 @@ class SignUp(Resource,CustomException):
         except  Exception as err:
             return self.showCustomException(err,request.args)
 
-
-'''
-class Ingles(Resource,CustomException):
-    client = MongoClient(db_uri)
-    db=client['chatbot']
-    phrases = db['phrases']
-    def get(self, id):
-        try:
-            return  support_jsonp_data(phrases.find_one({"_id": id}))
-        except  Exception as err:
-            return self.showCustomException(err,request.args)
-                
-    def put(self,id):
-        try:
-            item=request.form.to_dict()
-            item.pop('_id[$oid]', None)
-            item.pop('$$hashKey', None)
-            self.phrases.update_one( {"_id": ObjectId(id)},  {"$set": item})
-            return support_jsonp_ok({},"Se ha actualizado un registro.")
-
-        except  Exception as err:
-            return self.showCustomException(err,request.args)
-
-    def delete(self,id):
-        try:
-            self.phrases.delete_many( {"_id": ObjectId(id)})
-            return support_jsonp_ok({},"Se ha borrado un registro.")
-        except  Exception as err:
-            return self.showCustomException(err,request.args)
-'''
+ 
