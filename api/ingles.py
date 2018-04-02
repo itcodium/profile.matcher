@@ -68,24 +68,27 @@ class InglesList(Resource,CustomException):
             usr_id=request.args.get('u')
             user=self.users.find_one({"_id": ObjectId(usr_id)})
             phrases=None
-            print("InglesList -> user: ",user)
+            response= []
             if category in user: 
-                print("-------------- IN USER ----------------------")    
                 phrases=user[category]
-                return support_jsonp_data( dumps(phrases, ensure_ascii=False))
+                count=0
+                for doc in phrases:
+                    if "learned" in doc: 
+                        if not doc["learned"]=="true":
+                            response.append(doc)
+                    else:
+                        response.append(doc)
+                    count=count+1
+                return support_jsonp_data( dumps(response, ensure_ascii=False))
             else:
-                print("-------------- NEW USER ----------------------")    
                 phrases=self.db['phrases'].find({"category": category })
                 phrases=dumps(phrases, ensure_ascii=False)
-                
                 data=json.loads(phrases);
                 for doc in data:
                     doc["_id"]= doc["_id"]["$oid"]    
                 self.users.update_one( {"_id": ObjectId(usr_id)}, { '$push': { category: { '$each': data } } })
                 return support_jsonp_data(dumps(data, ensure_ascii=False))
-            
 
-            
         except Exception as err:
             return self.showCustomException(err,request.args)
 
@@ -179,6 +182,55 @@ class Categories(Resource,CustomException):
         except  Exception as err:
             return self.showCustomException(err,request.args)
 
+
+class InglesLearnedWord(Resource,CustomException):
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+    users = db['users']
+    def post(self):
+        try:
+
+            category=request.args.get('category')
+            usr_id=request.args.get('u')
+            word_id=request.args.get('w')
+
+            user=self.users.find_one({"_id": ObjectId(usr_id)})
+            phrases=None
+            print("InglesList -> user: ",category)
+
+            if category in user: 
+                print("-------------- IN USER ----------------------")    
+                phrases=user[category]
+                count=0
+                for doc in user[category]:
+                    if doc["_id"]== word_id:
+                        doc["learned"]='true';    
+                        item_update=category+"."+str(count)+".learned"
+                        print("item_update",item_update)
+                        self.users.update( {"_id": ObjectId(usr_id) }, { '$set': { item_update :  "true"  } })
+                    count=count+1                
+
+                print("---------------------------------------------")    
+                result= {"status":"ok", "message":"El regitro ha sido actualizado."}
+                return support_jsonp_data(dumps(result, ensure_ascii=False))
+            '''    
+            else:
+                print("-------------- NEW USER ----------------------")    
+                phrases=self.db['phrases'].find({"category": category })
+                phrases=dumps(phrases, ensure_ascii=False)
+                
+                data=json.loads(phrases);
+                for doc in data:
+                    doc["_id"]= doc["_id"]["$oid"]    
+                self.users.update_one( {"_id": ObjectId(usr_id)}, { '$push': { category: { '$each': data } } })
+                return support_jsonp_data(dumps(data, ensure_ascii=False))
+            '''
+
+        except Exception as err:
+            print("error",err)
+            return self.showCustomException(err,request.args)
+
+
 class InglesAltaMasiva():
     client = MongoClient(db_uri)
     db=client['chatbot']
@@ -213,3 +265,4 @@ class InglesAltaMasiva():
             print("phrases -> err ",err)    
             
         return listData   
+

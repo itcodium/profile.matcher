@@ -22,6 +22,7 @@ from api import InglesList
 from api import Categories
 from api import CategoriesList
 from api import InglesAltaMasiva
+from api import InglesLearnedWord
 from api import SignUp,Login
 
 current_folder = os.path.realpath(
@@ -97,16 +98,10 @@ api.add_resource(Login, '/api/ingles/login')
 
 api.add_resource(Ingles, '/api/ingles/phrases/<id>')
 api.add_resource(InglesList, '/api/ingles/phrases')
+api.add_resource(InglesLearnedWord, '/api/ingles/learnedword')
 
 api.add_resource(Categories, '/api/ingles/categories/<id>')
 api.add_resource(CategoriesList, '/api/ingles/categories')
-
-
-
-
-
-
-
 
 if __name__ == "__main__":
 	application.run()

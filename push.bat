@@ -1,3 +1,3 @@
 git add .
-git commit -m "2018-03-31 Se corrige login (II)"
+git commit -m "2018-04-02 Se marcan las frases como aprendidas "
 git push origin chatbot
