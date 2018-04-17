@@ -1,5 +1,4 @@
 from flask import jsonify
-from flask_json import JsonError
 from .support_jsonp import support_jsonp_error
 
  

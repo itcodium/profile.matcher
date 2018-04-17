@@ -22,7 +22,8 @@ sys.path.insert(0, previous_folder)
 import json
 
 from flask_restful import Resource,marshal_with, fields ,request, Api
-from flask_json import FlaskJSON, JsonError, json_response, as_json
+#from flask_json import FlaskJSON, JsonError, json_response, as_json
+
 
 from .customException import CustomException
 from .support_jsonp import support_jsonp_custom

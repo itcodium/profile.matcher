@@ -19,7 +19,7 @@ sys.path.insert(0, previous_folder)
 
 import json
 from flask_restful import Resource,marshal_with, fields ,request, Api
-from flask_json import FlaskJSON, JsonError, json_response, as_json
+#from flask_json import FlaskJSON, JsonError, json_response, as_json
 
 from stopwords.common import ClienteItem
 from stopwords.bus import ClienteBus
