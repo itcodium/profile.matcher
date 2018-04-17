@@ -6,7 +6,7 @@ from flask import request
 from flask import Flask
 from flask import jsonify 
 from flask_restful import Api
-from flask_json import FlaskJSON
+#from flask_json import FlaskJSON
 from flask_cors import CORS, cross_origin
 from flask import abort, redirect, url_for
 from flask import Blueprint, render_template
@@ -54,7 +54,7 @@ main = Blueprint('main', __name__, template_folder='templates')
 application.debug = True
 application.config['PROPAGATE_EXCEPTIONS'] = True
 CORS(application, supports_credentials=True)
-json = FlaskJSON(application)
+#json = FlaskJSON(application)
 
 
 
