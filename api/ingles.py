@@ -66,6 +66,17 @@ class InglesList(Resource,CustomException):
         try:
             category=request.args.get('category')
             usr_id=request.args.get('u')
+            
+            print("-----------------------------------------------------")
+            print("category",category)
+            print("category",usr_id)
+            print("-----------------------------------------------------")
+
+            if usr_id==None: 
+                phrases=self.db['phrases'].find({"category": category })
+                return support_jsonp_data(dumps(phrases, ensure_ascii=False))
+
+
             user=self.users.find_one({"_id": ObjectId(usr_id)})
             phrases=None
             response= []
@@ -90,6 +101,7 @@ class InglesList(Resource,CustomException):
                 return support_jsonp_data(dumps(data, ensure_ascii=False))
 
         except Exception as err:
+            print("InglesList err-> ",err)
             return self.showCustomException(err,request.args)
 
     def post(self):
@@ -109,6 +121,7 @@ class Ingles(Resource,CustomException):
         try:
             return  support_jsonp_data(phrases.find_one({"_id": id}))
         except  Exception as err:
+            print("Ingles err-> ",err)
             return self.showCustomException(err,request.args)
                 
     def put(self,id):
@@ -142,6 +155,7 @@ class CategoriesList(Resource,CustomException):
             print("data", data)
             return support_jsonp_data( dumps(self.db['phrases_category'].find(), ensure_ascii=False))
         except Exception as err:
+            print("CategoriesList err-> ",err)
             return self.showCustomException(err,request.args)
 
     def post(self):
@@ -162,6 +176,7 @@ class Categories(Resource,CustomException):
             phrases = self.db['phrases']
             return  support_jsonp_data(phrases.find_one({"_id": id}))
         except  Exception as err:
+            print("Categories err-> ",err)
             return self.showCustomException(err,request.args)
                 
     def put(self,id):
