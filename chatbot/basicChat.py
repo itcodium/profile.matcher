@@ -2,7 +2,7 @@ from chatterbot import ChatBot
 
 chatbot = ChatBot(
     'Terminal',
-    trainer='chatterbot.trainers.ChatterBotCorpusTrainer'
+    trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
 )
 
 #chatbot.train("./train/")
