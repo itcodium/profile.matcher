@@ -16,6 +16,7 @@ class TemperatureAdapter(LogicAdapter):
     def can_process(self, statement):
         words = ['what', 'is', 'temperature']
         text=re.sub('[!@#$?]', '', statement.text)
+        text=text.lower()
         res= all(x in text.split() for x in words)
         if res:
             return True
