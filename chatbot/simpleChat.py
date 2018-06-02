@@ -1,59 +1,69 @@
 # -*- coding: utf-8 -*-
-from chatterbot.trainers import ListTrainer
+
+import os
+import sys
+import inspect
+
+# Get the current folder, which is the input folder
+current_folder = os.path.realpath(
+    os.path.abspath(
+        os.path.split(
+            inspect.getfile(
+                inspect.currentframe()
+            )
+     )[0]
+   )
+)
+folder_parts = current_folder.split(os.sep)
+previous_folder = os.sep.join(folder_parts[0:-2])
+sys.path.insert(0, current_folder)
+sys.path.insert(0, previous_folder)
+
+
 
 from chatterbot import ChatBot
-chatbot = ChatBot("Ron Obvious",
-		logic_adapters=[
-	        'chatterbot.logic.BestMatch',
-	        {
-	            'import_path': 'chatterbot.logic.LowConfidenceAdapter',
-	            'default_response': ':)'
-	        }
-	    ]
-	)
+from chatterbot.trainers import ListTrainer
+ 
 
-conversation1 = [
-"give me a report of security threats in apache server",
-"hello_result()",
-"thank you."
+db_uri=''
+strEnvi=""
+try:
+    strEnvi=os.environ["CHAT_BOT_SOWA"]
+except Exception as err:
+    print("error -> ",err)
 
-]
-
-conversation2 = [
-"give me a report",
-"What report do you want?",
-"Security threats",
-"hello_result()",
-"thanks!"
-
-]
-
-conversation3 = [
-"give me a report",
-"What report do you want?",
-"I want Security threats report"
-"hello_result()",
-"bye bye"
-]
-
-conversation4 = [
-"I need a report",
-"What report do you want?",
-"Security threats",
-"I want the Security threats report",
-"hello_result()",
-"see you soon"
-]
+if (strEnvi=="development"):
+    db_uri='mongodb://root:kAUmjz4Hxx36@192.168.220.128:27017',
+else:
+    db_uri='mongodb://admin:kAUmjz4Hxx36@mongodb:27017',
 
 
-chatbot.set_trainer(ListTrainer)
-chatbot.train(conversation1)
-chatbot.train(conversation2)
-chatbot.train(conversation3)
-chatbot.train(conversation4)
+print ("DB -> ",strEnvi,' - ', db_uri)
 
-#response = chatbot.get_response("give me a report")
-#print(response)
+chatbot = ChatBot(
+    'Terminal',
+    trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
+    storage_adapter='chatterbot.storage.MongoDatabaseAdapter',
+    read_only=True,
+	logic_adapters=[
+		{
+        	'import_path':'chatterbot.logic.BestMatch'
+        },
+        {
+            'import_path': 'adapters.TemperatureAdapter.TemperatureAdapter',
+            'default_response': ':)'
+        }
+    ],
+
+    filters=[
+        'chatterbot.filters.RepetitiveResponseFilter'
+    ],
+
+    database_uri=db_uri,
+    database='chatbot'
+    )
+
+chatbot.train("./train/")
 
 strInitChat='Iniciando chat';
 print(strInitChat)

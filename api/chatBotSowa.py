@@ -66,8 +66,6 @@ else:
 print ("DB -> ", db_uri)
 
 
-# 'import_path': 'chatbot.adapters.MyLogicAdapter.MyLogicAdapter',
-
 bot = ChatBot(
     'Terminal',
     trainer='chatterbot.trainers.ChatterBotCorpusTrainer',
@@ -75,42 +73,31 @@ bot = ChatBot(
     read_only=True,
     logic_adapters=[
         {
-            'import_path': 'chatbot.adapters.MyLogicAdapter.MyLogicAdapter'
+            'import_path':'chatterbot.logic.BestMatch'
+        },
+        {
+            'import_path': 'chatbot.adapters.TemperatureAdapter.TemperatureAdapter',
+            'default_response': ':)'
         }
     ],
+
     filters=[
         'chatterbot.filters.RepetitiveResponseFilter'
     ],
-    #input_adapter='chatterbot.input.TerminalAdapter',
-    #output_adapter='chatterbot.output.TerminalAdapter',
+
     database_uri=db_uri,
     database='chatbot'
     )
 
-
 '''
-    logic_adapters=[
-        'chatterbot.logic.BestMatch',
-        {
-            'import_path': 'chatterbot.logic.LowConfidenceAdapter',
-            'default_response': 'What can I do for you?.'
-        }
-    ],
- 
-       Username: chatbot@admin
-       Password: kAUmjz4Hxx36
-  Database Name: chatbot
- Connection URL: mongodb://chatbot@admin:kAUmjz4Hxx36@mongodb/chatbot
-
-
+        Username: chatbot@admin
+        Password: kAUmjz4Hxx36
+        Database Name: chatbot
+        Connection URL: mongodb://chatbot@admin:kAUmjz4Hxx36@mongodb/chatbot
 '''
-
-
-
 
 #from pymongo import MongoClient
 #from pprint import pprint
-
 
 
 class ChatBotSowa(Resource,CustomException):
@@ -146,6 +133,19 @@ class ChatBotTrainSowa(Resource,CustomException):
         except Exception as err:
             return self.showCustomException(err,request.args)
 
+class ChatBotDeleteSowa(Resource,CustomException):
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+    statements    = db['statements']
+    conversations = db['conversations']
+
+    def get(self):
+        try:
+            self.statements.remove()
+            self.conversations.remove()
+            return {"Delete":"ok"}
+        except Exception as err:
+            return self.showCustomException(err,request.args)
 
 
 

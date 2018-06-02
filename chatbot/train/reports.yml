@@ -1,19 +1,31 @@
 categories:
-- reports
+- SimpleChat
 conversations:
+- - Hello
+  - What can I do for you?
 - - Give me a report of security threats in apache server
   - hello_result()
-- - apache server
-  - hello_result()  
-- - apache server report
-  - hello_result()    
 - - give me a report
   - What report do you want?
-- - I need a report  
-  - What report do you want?
+- - Do you have a report?
+  - Yes, I do
 - - Security threats
   - hello_result()
+- - I want Security threats report
+  - hello_result()
+- - What reports do you have?  
+  - report_list()  
+- - I need a report
+  - What report do you want?
+- - I want a report
+  - What report do you want?
 - - I want car report.
-  - Sorry, we didn't found that report.
-- - I want car's reports  
-  - Sorry, we didn't found that report.
+  - Sorry, we didn't found that report.  
+- - I want you mother report.
+  - jajaja().    
+- - thank you
+  - bye
+- - thanks!
+  - bye
+- - bye bye
+  - bye  

@@ -30,7 +30,7 @@
 	var _this=this;
 	var url="http://chatbot-chatbot01.7e14.starter-us-west-2.openshiftapps.com/api/chatbot?text="
 
-	//var url="http://localhost:5000/api/chatbot?text="
+	// var url="http://localhost:5000/api/chatbot?text="
 	_this.total=0;
 	_this.msg=[];
 
@@ -50,7 +50,7 @@
 	}
 	
 	this.getMessage=function(msg){
-		var delay=	msg.length * 50; 
+		var delay=	msg.length * 0; 
 		return { type: 'text', value: msg, class: 'bot', delay: delay }
 	};
 	this.print=function(msg){
