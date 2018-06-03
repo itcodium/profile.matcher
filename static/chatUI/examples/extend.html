@@ -45,9 +45,19 @@
 
     };
 
-    chat.addBubble({ type: 'text', value: 'Let me show you my Logo...', class: 'bot', delay: 1000 }, function () {
-      chat.addBubble({ type: 'image', value: 'https://github.com/svift-org/ChatUI/blob/master/README/ChatUI-Logo.png?raw=true', class: 'bot', delay: 1000 });
-    });
+    chat.addBubble(
+      { type: 'text', 
+        value: 'Let me show you my Logo...', 
+        class: 'bot', 
+        delay: 1000 
+      }, function () {
+          chat.addBubble({ 
+            type: 'image', 
+            value: 'https://github.com/svift-org/ChatUI/blob/master/README/ChatUI-Logo.png?raw=true', 
+            class: 'bot', 
+            delay: 1000 });
+      }
+    );
 
   </script>
 </body>

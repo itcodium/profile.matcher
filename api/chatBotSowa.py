@@ -99,6 +99,9 @@ bot = ChatBot(
 #from pymongo import MongoClient
 #from pprint import pprint
 
+# -------------------------------------------------------
+# Funcion principal 
+# -------------------------------------------------------
 
 class ChatBotSowa(Resource,CustomException):
     client = MongoClient(db_uri)
@@ -109,14 +112,21 @@ class ChatBotSowa(Resource,CustomException):
             usr_input=request.args.get('text')
             bot_output = bot.get_response(usr_input)
             print(" - Chat bot process - ",bot_output);
-            if (bot_output=='What can I do for you?.'):
+            
+            #
+            if (bot_output=='report_list()'):
+                r=ChatBotGetReports()
+                data=r.get()
+                print("Datos List -> ",data)
+                return  support_jsonp_data(data)
+                '''
                 post = {"input": usr_input,
                         "output": str(bot_output),
                         "date": datetime.datetime.utcnow(),
                         "update":None}
                 posts = self.db.posts
                 post_id = posts.insert_one(post).inserted_id
-
+                '''
             return support_jsonp_custom({"text":bot_output},resource_fields)
         except Exception as err:
             print("Error ->  ",err);
@@ -144,6 +154,51 @@ class ChatBotDeleteSowa(Resource,CustomException):
             self.statements.remove()
             self.conversations.remove()
             return {"Delete":"ok"}
+        except Exception as err:
+            return self.showCustomException(err,request.args)
+
+class ChatBotCreateReportListSowa(Resource,CustomException):
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+    def get(self):
+        try:
+            reports = self.db['reports']
+
+            rpt=self.db['reports'].find({"report": "Football" })
+            if dumps(rpt, ensure_ascii=False) =="[]":
+                reports.insert_one({"report": "Football", "created": datetime.datetime.utcnow()})
+
+            rpt=self.db['reports'].find({"report": "Basketball" })
+            if dumps(rpt, ensure_ascii=False) =="[]":
+                reports.insert_one({"report": "Basketball", "created": datetime.datetime.utcnow()})
+
+            rpt=self.db['reports'].find({"report": "Tennis" })
+            if dumps(rpt, ensure_ascii=False) =="[]":
+                reports.insert_one({"report": "Tennis", "created": datetime.datetime.utcnow()})
+                
+            rpt=self.db['reports'].find({"report": "Golf" })
+            if dumps(rpt, ensure_ascii=False) =="[]":
+                reports.insert_one({"report": "Golf", "created": datetime.datetime.utcnow()})
+                
+            rpt=self.db['reports'].find({"report": "Ice Hockey" })
+            if dumps(rpt, ensure_ascii=False) =="[]":
+                reports.insert_one({"report": "Ice Hockey", "created": datetime.datetime.utcnow()})
+                    
+            return {"Created":"ok"}
+        except Exception as err:
+            return self.showCustomException(err,request.args)
+
+
+class ChatBotGetReports():
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+    def get(self):
+        try:
+            reports = self.db['reports']
+            data=self.db['reports'].find()
+            data=dumps(data, ensure_ascii=False) 
+            
+            return data
         except Exception as err:
             return self.showCustomException(err,request.args)
 

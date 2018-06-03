@@ -18,6 +18,7 @@ from api import ChatBotSowa
 from api import ChatBotTrainSowa
 from api import ChatBotDBTest
 from api import ChatBotDeleteSowa
+from api import ChatBotCreateReportListSowa
 from api import Ingles
 from api import InglesList
 from api import Categories
@@ -92,6 +93,8 @@ api.add_resource(Cliente, '/api/cliente/<id>')
 api.add_resource(ChatBotSowa, '/api/chatbot')
 api.add_resource(ChatBotTrainSowa, '/api/chatbot/train')
 api.add_resource(ChatBotDeleteSowa, '/api/chatbot/delete')
+api.add_resource(ChatBotCreateReportListSowa, '/api/chatbot/setreport')
+
 api.add_resource(ChatBotDBTest, '/api/db')
 
 

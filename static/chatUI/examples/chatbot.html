@@ -3,6 +3,7 @@
   <title>ChatUI</title>
   <meta charset="utf-8">
   <link rel="stylesheet" href="../build/chatUI.css">
+  <link rel="stylesheet" href="list.css">
   <meta name="viewport" content="width=device-width">
   <style>
     html, body{
@@ -30,24 +31,29 @@
 	var _this=this;
 	var url="http://chatbot-chatbot01.7e14.starter-us-west-2.openshiftapps.com/api/chatbot?text="
 
-	// var url="http://localhost:5000/api/chatbot?text="
+	var url="http://localhost:5000/api/chatbot?text="
 	_this.total=0;
 	_this.msg=[];
 
 
 	this.sendMessage=function(msg){
-	 console.log("msg",url+msg)
-		  $.ajax(url+msg, {
-		      success: function(data) {
-		         console.log("data",data)
-		         _this.print(data.text)
-		      },
-		      error: function(error) {
+	 	console.log("msg",url+msg)
+		$.ajax(url+msg, {
+		    success: function(data) {
+		        console.log("data",data)
+		        if (typeof data.text!='undefined'){
+		        	_this.print(data.text)
+		        }else{
+		        	_this.print(data)	
+		        }
+		    },
+		    error: function(error) {
 		        console.log("error", error) 
-		      }
-		   });
+		    }
+		});
 	 
 	}
+	
 	
 	this.getMessage=function(msg){
 		var delay=	msg.length * 0; 
@@ -57,16 +63,27 @@
 		console.log("msg",typeof msg)
 		if(typeof msg=="string"){
 			chat.addBubble(_this.getMessage(msg), function (){});
+			// this.showList();
+
 		}
 		else{
-			chat.addBubble(_this.getMessage(msg[_this.total]), function (){
-				_this.total++
-				if(_this.total<msg.length){
-					_this.print(msg)
+
+				if(typeof msg=="object"){
+					var list=[]
+					for (i = 0; i < msg.length; i++) { 
+					    list.push(msg[i].report);
+					}
+					this.showList(list)
 				}else{
-					_this.showInput();
+					chat.addBubble(_this.getMessage(msg[_this.total]), function (){
+						_this.total++
+						if(_this.total<msg.length){
+							_this.print(msg)
+						}else{
+							_this.showInput();
+						}
+					});
 				}
-			});
 		}
 		
 	}
@@ -85,6 +102,23 @@
 			*/
 		  });
 	}
+	this.showImage=function(){
+		chat.addBubble({ 
+            type: 'image', 
+            value: 'https://github.com/svift-org/ChatUI/blob/master/README/ChatUI-Logo.png?raw=true', 
+            class: 'bot', 
+            delay: 1000 })	
+	}
+	
+
+
+	this.showList=function(param){
+		chat.addBubble({ 
+            type: 'list', 
+            value: param, 
+            class: 'bot', 
+            delay: 1000 })	
+	}
 	
 }
 
@@ -92,7 +126,51 @@
 
 
     var chat = chatUI(d3.select('#chatbot'));
-	
+
+    chat.types.image = function(bubble, options, callback){
+      	bubble
+      	.append('div')
+        .attr('class', 'cb-waiting')
+        .html('<div class="circle"></div><div class="circle"></div><div class="circle"></div>');
+
+      	var image = new Image();
+      		image.src = options.value;
+      		image.addEventListener('load', 
+      			function(){
+        			bubble.select(".cb-waiting").remove();
+        			options.value = '<img src="' + options.value + '" />';
+        			chat.appendText(bubble, options, callback);
+      }, false);
+    };
+
+    chat.types.list = function(bubble, options, callback){
+		bubble
+      	.append('div')
+        .attr('class', 'cb-waiting')
+        .html('<div class="circle"></div><div class="circle"></div><div class="circle"></div>');
+       
+        // 1. Crear lista 
+		var i,text='<div id="listsprites"><ul>';
+		for (i = 0; i < options.value.length; i++) { 
+		    text += '<li><a class="itemList" href="#">'+options.value[i]+"</a></li>";
+		}
+		text=text+"</ul></div>";
+
+		// 2. ensertar bubble
+      	bubble.select(".cb-waiting").remove();
+		options.value=text;
+      	chat.appendText(bubble, options, callback);
+
+      	// 3. Agergar evento a cada elemento de la lista
+      	var list=document.getElementsByClassName("itemList")
+		for (var i = 0, len = list.length; i < len; i++) {
+		  		list[i].onclick=function(){
+	   		 		console.log("Yeah!",this.text)
+				}
+		  		
+		}
+    };
+
 	var appChat=new ChatBotSowa(chat)
 		// appChat.writeMessage(['Hi there!','What is your name?'])
 		appChat.showUserInput()
