@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 import os
 import sys
 import inspect
@@ -36,13 +35,8 @@ resource_fields = {
     'text':fields.String
 }
 
-
-
-
-
 from chatterbot import ChatBot
 from chatterbot.trainers import ListTrainer
-
 
 # Uncomment the following lines to enable verbose logging
 # import logging
@@ -77,14 +71,12 @@ bot = ChatBot(
         },
         {
             'import_path': 'chatbot.adapters.TemperatureAdapter.TemperatureAdapter',
-            'default_response': ':)'
+            'default_response': '...'
         }
     ],
-
     filters=[
         'chatterbot.filters.RepetitiveResponseFilter'
     ],
-
     database_uri=db_uri,
     database='chatbot'
     )
@@ -95,14 +87,12 @@ bot = ChatBot(
         Database Name: chatbot
         Connection URL: mongodb://chatbot@admin:kAUmjz4Hxx36@mongodb/chatbot
 '''
-
 #from pymongo import MongoClient
 #from pprint import pprint
 
 # -------------------------------------------------------
 # Funcion principal 
 # -------------------------------------------------------
-
 class ChatBotSowa(Resource,CustomException):
     client = MongoClient(db_uri)
     db=client['chatbot']
@@ -119,22 +109,28 @@ class ChatBotSowa(Resource,CustomException):
                 data=r.get()
                 print("Datos List -> ",data)
                 return  support_jsonp_data(data)
-                '''
+            '''
+            if (bot_output=='...'):    
                 post = {"input": usr_input,
                         "output": str(bot_output),
                         "date": datetime.datetime.utcnow(),
                         "update":None}
                 posts = self.db.posts
                 post_id = posts.insert_one(post).inserted_id
-                '''
+            '''
+            '''
+            post = {"input": usr_input,
+                    "output": str(bot_output),
+                    "date": datetime.datetime.utcnow(),
+                    "update":None}
+            posts = self.db.posts
+            post_id = posts.insert_one(post).inserted_id
+            '''
             return support_jsonp_custom({"text":bot_output},resource_fields)
         except Exception as err:
             print("Error ->  ",err);
             return self.showCustomException(err,request.args)
             
-
-
-
 class ChatBotTrainSowa(Resource,CustomException):
     def get(self):
         try:
@@ -230,3 +226,25 @@ class ChatBotDBTest(Resource,CustomException):
             return  support_jsonp_data(dumps(self.db['posts'].find(),default=json_util.default))
         except Exception as err:
             return self.showCustomException(err,request.args)
+
+class NewsReader(Resource,CustomException):
+    client = MongoClient(db_uri)
+    db=client['chatbot']
+
+    def get(self):
+        try:
+            
+            remote_addr=request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+            call =  {"ip": remote_addr,
+                    "date": datetime.datetime.utcnow()}
+            newsreader = self.db.newsreader
+            pId = newsreader.insert_one(call).inserted_id
+
+            pDelete=request.args.get('delete')
+            if pDelete=="1" or pDelete=="true" :
+                self.db.newsreader.remove()
+
+            return  support_jsonp_data(dumps(self.db['newsreader'].find(),default=json_util.default))
+        except Exception as err:
+            return self.showCustomException(err,request.args)
+
