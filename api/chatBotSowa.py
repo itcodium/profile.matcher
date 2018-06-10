@@ -233,16 +233,21 @@ class NewsReader(Resource,CustomException):
 
     def get(self):
         try:
-            
-            remote_addr=request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
-            call =  {"ip": remote_addr,
-                    "date": datetime.datetime.utcnow()}
-            newsreader = self.db.newsreader
-            pId = newsreader.insert_one(call).inserted_id
+            print("+++++++++++++++++++++ -> ",datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+
+            pNolog=request.args.get('nolog')
+            if not(pNolog=="1" or pNolog=="true") :
+                remote_addr=request.environ.get('HTTP_X_REAL_IP', request.remote_addr)
+                call =  {"ip": remote_addr,
+                        "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
+                newsreader = self.db.newsreader
+                pId = newsreader.insert_one(call).inserted_id
 
             pDelete=request.args.get('delete')
             if pDelete=="1" or pDelete=="true" :
                 self.db.newsreader.remove()
+            
+            
 
             return  support_jsonp_data(dumps(self.db['newsreader'].find(),default=json_util.default))
         except Exception as err:
