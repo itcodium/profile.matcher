@@ -1,3 +1,3 @@
 git add .
-git commit -m "2018-06-09 (II) Se agrega metodo para control de request /api/newsreader "
+git commit -m "2018-06-10 Se modifica el campo a mostrar en el log de newsreader "
 git push origin chatbot

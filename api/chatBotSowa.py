@@ -249,7 +249,7 @@ class NewsReader(Resource,CustomException):
             
             
 
-            return  support_jsonp_data(dumps(self.db['newsreader'].find(),default=json_util.default))
+            return  support_jsonp_data(dumps(self.db['newsreader'].find({},{"date":"1","_id": 0}),default=json_util.default))
         except Exception as err:
             return self.showCustomException(err,request.args)
 
