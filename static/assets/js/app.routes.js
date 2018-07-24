@@ -7,7 +7,8 @@ var ENTORNO = '//python-viupho';
 
 if (ENTORNO == '//python-viupho') {
     API_URL_PROTOCOLO = "";
-    API_URL = API_URL_PROTOCOLO + "http://bbb1-1000.193b.starter-ca-central-1.openshiftapps.com/api/";
+    API_URL = API_URL_PROTOCOLO + "http://profile-pmatch.193b.starter-ca-central-1.openshiftapps.com/api/";
+
 }
 
 if (ENTORNO == '//127.0.0.1:5000') {

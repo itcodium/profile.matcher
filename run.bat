@@ -1,4 +1,4 @@
-python routes.py
+python wsgi.py
 @pause
 
   
