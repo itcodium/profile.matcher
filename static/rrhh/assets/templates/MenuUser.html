@@ -1,0 +1,17 @@
+
+<ul class="nav navbar-nav navbar-right">														
+    <li class="dropdown">																						
+        <a href="#" class="dropdown-toggle waves-effect waves-button waves-classic" data-toggle="dropdown">		
+            <span class="user-name">{{value.name}}<i class="fa fa-angle-down"></i></span>		 			
+            <img ng-if="false" class="img-circle avatar" ng-src="{{value.imageProfile}}" width="40" height="40" alt="">			
+        </a>																									
+        <ul class="dropdown-menu dropdown-list" role="menu">													
+            <li ng-if="userProfile.show" role="presentation" class="{{userProfile.divider}}" ng-repeat="userProfile in value.userItems">		
+            	 <a ng-if="userProfile.title" ng-click="userProfile.click()" href="{{userProfile.href}}">																	 
+            		<i class="{{userProfile.class}}"></i>														
+            		{{userProfile.title}}																		
+            	</a>																							
+            </li>																								
+        </ul>																									
+    </li>																										
+</ul>

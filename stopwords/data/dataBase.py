@@ -1,12 +1,12 @@
 import sys
+import os
+
 import mysql.connector 
 
 class DataBase:
-
 	cnn=None
-	environment='__development'
 	try:
-		if environment=='development':
+		if os.environ['NODE_ENV']=='development':
 			cnn = mysql.connector.connect(user='root', password='123123',host='localhost',port='3306',database='hhrr_profile_matcher')
 		else:
 			cnn = mysql.connector.connect(user='root', password='123123',host='mysql',port='3306',database='hhrr_profile_matcher')

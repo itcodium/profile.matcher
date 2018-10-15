@@ -1,3 +1,3 @@
 git add .
-git commit -m "Se actualiza configuracion base datos"
+git commit -m "2018-10-14 Se actualiza la carpeta static"
 git push origin master
